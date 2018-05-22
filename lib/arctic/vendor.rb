@@ -1,4 +1,4 @@
-require "vendor/version"
+require "arctic/vendor/version"
 require 'arctic/vendor/api'
 require 'arctic/vendor/vendor'
 require 'arctic/vendor/uri'
