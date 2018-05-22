@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Emil Kampp"]
   spec.email         = ["emil@kampp.me"]
 
-  spec.summary       = "Hello"
-  spec.description   = "Hello"
-  spec.homepage      = "https://google.com"
+  spec.summary       = "Core API communcation from and to vendors"
+  spec.description   = "This exposes a series of normal usage endpoints for Vendors to communicate with the Core API"
+  spec.homepage      = "https://github.com/YouWeApS/arctic-vendor"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
