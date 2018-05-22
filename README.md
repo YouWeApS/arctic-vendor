@@ -14,6 +14,7 @@ Then in your code:
 
 ```ruby
 require 'bundler/setup'
+require 'arctic/vendor'
 
 module Arctic
   module Vendor
@@ -33,6 +34,20 @@ module Arctic
       module_function :distribute_products
     end
   end
+end
+```
+
+Then in your Rakefile:
+
+```ruby
+require_relative "./path/to/your/lib"
+
+desc "Sync"
+task :sync do
+  # You can skip either of these if the vendor doesn't support either pulling or
+  # pushing products and orders.
+  Arctic::Vendor::Dandomain.collect_products
+  Arctic::Vendor::Dandomain.distribute_products
 end
 ```
 
