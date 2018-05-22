@@ -21,7 +21,9 @@ RSpec.describe Arctic::Vendor::API do
 
     it 'calls the right API endpoint' do
       response = double body: accounts.to_json, status: 200
-      expect(instance.connection).to receive(:get).with('accounts').and_return response
+      expect(instance.connection).to receive(:get)
+        .with('accounts')
+        .and_return response
       expect(instance.list_accounts).to eql accounts
     end
   end
@@ -31,7 +33,9 @@ RSpec.describe Arctic::Vendor::API do
 
     it 'calls the right API endpoint' do
       response = double body: account.to_json, status: 200
-      expect(instance.connection).to receive(:get).with("accounts/account1").and_return response
+      expect(instance.connection).to receive(:get)
+        .with("accounts/account1")
+        .and_return response
       expect(instance.show_account('account1')).to eql account
     end
   end
@@ -46,22 +50,28 @@ RSpec.describe Arctic::Vendor::API do
 
     it 'calls the right API endpoint' do
       response = double body: shops.to_json, status: 200
-      expect(instance.connection).to receive(:get).with("accounts/account1/shops").and_return response
+      expect(instance.connection).to receive(:get)
+        .with("accounts/account1/shops")
+        .and_return response
       expect(instance.list_shops('account1')).to eql shops
     end
   end
 
   describe '#send_products' do
     let(:products) do
-      [
-        { id: 'shop1' },
-        { id: 'shop2' },
-      ].as_json
+      1001.times.collect do |i|
+        {
+          id: "shop#{i}",
+        }
+      end.as_json
     end
 
     it 'calls the right API endpoint' do
       response = double body: '', status: 202
-      expect(instance.connection).to receive(:post).with("accounts/account1/shops/shop1/products").and_return response
+      expect(instance.connection).to receive(:post)
+        .with("accounts/account1/shops/shop1/products")
+        .exactly(2).times
+        .and_return response
       expect(instance.send_products('account1', 'shop1', products)).to eql products
     end
   end
