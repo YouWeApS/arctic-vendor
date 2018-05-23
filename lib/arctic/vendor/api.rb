@@ -44,6 +44,11 @@ module Arctic
         end
       end
 
+      # Retrieve products from the Core API
+      def list_products(account_id, shop_id)
+        make_request :get, "accounts/#{account_id}/#{shop_id}/products"
+      end
+
       private
 
         def make_batch_request(*args, **options)
