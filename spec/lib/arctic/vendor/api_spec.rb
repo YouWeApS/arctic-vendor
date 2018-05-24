@@ -75,4 +75,21 @@ RSpec.describe Arctic::Vendor::API do
       expect(instance.send_products('account1', 'shop1', products)).to eql products
     end
   end
+
+  describe '#list_products' do
+    let(:products) do
+      [
+        { id: 'product1' },
+        { id: 'product2' },
+      ].as_json
+    end
+
+    it 'calls the right API endpoint' do
+      response = double body: products.to_json, status: 200
+      expect(instance.connection).to receive(:get)
+        .with("accounts/account1/shops/shop1/products")
+        .and_return response
+      expect(instance.list_products('account1', 'shop1')).to eql products
+    end
+  end
 end

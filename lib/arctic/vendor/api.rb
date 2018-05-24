@@ -46,7 +46,7 @@ module Arctic
 
       # Retrieve products from the Core API
       def list_products(account_id, shop_id)
-        make_request :get, "accounts/#{account_id}/#{shop_id}/products"
+        make_request :get, "accounts/#{account_id}/shops/#{shop_id}/products"
       end
 
       private
