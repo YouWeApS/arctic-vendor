@@ -67,6 +67,32 @@ variable.
 If you need to run your application against another environment you can override
 the URL by setting the `ARCTIC_CORE_API_URL` environment variable.
 
+# Object descriptions
+
+### Shop
+
+A single object.
+
+Parameter | Description
+--------- | -----------
+id | Shop ID
+name | Human friendly shop name
+synced_at | [ISO 8601 HTTP date](https://en.wikipedia.org/wiki/ISO_8601)
+auth_config | Marketplace uathentication information
+config | General configuration set for the shop
+format_config | JSON formatting instructions
+
+### Products
+
+An array of product objects.
+
+Parameter | Description
+--------- | -----------
+id | Product ID
+characteristics | Normalized product characteristics
+master | Product is master. Will have a Product ID value if this product is a variant of another.
+state | Last known product state. Can be <code>created</code>, <code>updated</code>, or <code>deleted</code>
+
 # Collecting products
 
 > Collect products from the marketplace
@@ -82,6 +108,8 @@ shops that your vendor should process.
 
 Then retrieve the products for that shop, and return them to the block, and the
 Vendor Project will send them to the Core API.
+
+The products you return to the block should be a JSON array of products, each formatted according to the `shop`s `format_config` block.
 
 # Distributing products
 
