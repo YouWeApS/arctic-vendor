@@ -230,6 +230,17 @@
             <a href="#setup" class="toc-h1 toc-link" data-title="setup">Setup</a>
           </li>
           <li>
+            <a href="#object-descriptions" class="toc-h1 toc-link" data-title="object-descriptions">Object descriptions</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#shop" class="toc-h2 toc-link" data-title="shop">Shop</a>
+                  </li>
+                  <li>
+                    <a href="#products" class="toc-h2 toc-link" data-title="products">Products</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#collecting-products" class="toc-h1 toc-link" data-title="collecting-products">Collecting products</a>
           </li>
           <li>
@@ -285,6 +296,66 @@ variable.</p>
 
 <p>If you need to run your application against another environment you can override
 the URL by setting the <code>ARCTIC_CORE_API_URL</code> environment variable.</p>
+<h1 id='object-descriptions'>Object descriptions</h1><h3 id='shop'>Shop</h3>
+<p>A single object.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Shop ID</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Human friendly shop name</td>
+</tr>
+<tr>
+<td>synced_at</td>
+<td><a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601 HTTP date</a></td>
+</tr>
+<tr>
+<td>auth_config</td>
+<td>Marketplace uathentication information</td>
+</tr>
+<tr>
+<td>config</td>
+<td>General configuration set for the shop</td>
+</tr>
+<tr>
+<td>format_config</td>
+<td>JSON formatting instructions</td>
+</tr>
+</tbody></table>
+<h3 id='products'>Products</h3>
+<p>An array of product objects.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Product ID</td>
+</tr>
+<tr>
+<td>characteristics</td>
+<td>Normalized product characteristics</td>
+</tr>
+<tr>
+<td>master</td>
+<td>Product is master. Will have a Product ID value if this product is a variant of another.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>Last known product state. Can be <code>created</code>, <code>updated</code>, or <code>deleted</code></td>
+</tr>
+</tbody></table>
 <h1 id='collecting-products'>Collecting products</h1>
 <blockquote>
 <p>Collect products from the marketplace</p>
@@ -298,6 +369,8 @@ shops that your vendor should process.</p>
 
 <p>Then retrieve the products for that shop, and return them to the block, and the
 Vendor Project will send them to the Core API.</p>
+
+<p>The products you return to the block should be a JSON array of products, each formatted according to the <code>shop</code>s <code>format_config</code> block.</p>
 <h1 id='distributing-products'>Distributing products</h1>
 <blockquote>
 <p>Distribute products to the marketplace</p>
