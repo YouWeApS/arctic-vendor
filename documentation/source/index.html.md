@@ -31,7 +31,6 @@ from the marketplace into structured data.
 **Distributing products** means sending structured products onto the connected
 marketplace.
 
-
 # Setup
 
 > To install in your project
@@ -117,3 +116,12 @@ First, initialize the `Vendor.distribute_products` method to receive each of the
 shops and related products to distribute to the marketplace.
 
 Then connect to the marketplace and distribute the products to the shop.
+
+# Going live
+
+When you have fully developed your Vendor, you will have to go through a
+verification and testing process with the Arctic Team.
+
+Once you pass this verification process your Vendor will be released into
+production and merchants can distribute their products through your Vendor to
+the marketplace.
