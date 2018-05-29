@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Arctic UI API SDK Reference</title>
+    <title>API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;ruby&quot;]">
+  <body class="index" data-languages="[&quot;ruby&quot;,&quot;python&quot;,&quot;php&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,6 +212,8 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="php">php</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -225,190 +227,303 @@
             <a href="#installation" class="toc-h1 toc-link" data-title="installation">Installation</a>
           </li>
           <li>
-            <a href="#configuration" class="toc-h1 toc-link" data-title="configuration">Configuration</a>
+            <a href="#setup" class="toc-h1 toc-link" data-title="setup">Setup</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="authentication">Authentication</a>
+            <a href="#collecting-products" class="toc-h1 toc-link" data-title="collecting-products">Collecting products</a>
           </li>
           <li>
-            <a href="#account" class="toc-h1 toc-link" data-title="account">Account</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#get-account-information" class="toc-h2 toc-link" data-title="get-account-information">Get account information</a>
-                  </li>
-                  <li>
-                    <a href="#update-account-information" class="toc-h2 toc-link" data-title="update-account-information">Update account information</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#shops" class="toc-h1 toc-link" data-title="shops">Shops</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#list-shops" class="toc-h2 toc-link" data-title="list-shops">List shops</a>
-                  </li>
-                  <li>
-                    <a href="#update-an-existing-shop-39-s-information" class="toc-h2 toc-link" data-title="update-an-existing-shop-s-information">Update an existing shop's information</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#preprocessors" class="toc-h1 toc-link" data-title="preprocessors">Preprocessors</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#list-available-preprocessors" class="toc-h2 toc-link" data-title="list-available-preprocessors">List available preprocessors</a>
-                  </li>
-              </ul>
+            <a href="#distributing-products" class="toc-h1 toc-link" data-title="distributing-products">Distributing products</a>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="errors">Errors</a>
           </li>
       </div>
         <ul class="toc-footer">
-            <li><a href='mailto:info@youwe.dk'>Contact us for an account</a></li>
+            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>The Arctic UI API are the available endpoints for building UI applications to view and interact with the Arctic project core.</p>
+<p>The Arctic Vendor project is a wrapper around the <a href="https://arctic-project.io">Arcic Core API</a>.</p>
 
-<p>This SDK gives you a programmable way to interact with the UI API. You can also explore the API in a more interactive and direct way via our <a href="https://arctic-core.herokuapp.com">Swagger documentation</a>.</p>
-<h1 id='installation'>Installation</h1><pre class="highlight ruby tab-ruby"><code><span class="n">gem</span> <span class="s1">'arctic-ui'</span>
-</code></pre><h1 id='configuration'>Configuration</h1><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'arctic/ui'</span>
+<p>An Arctic Vendor is an application that connects a marketplace to the Arctic platform.</p>
 
-<span class="no">Arctic</span><span class="o">::</span><span class="no">UI</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="p">.</span><span class="nf">client_id</span> <span class="o">=</span> <span class="s2">"CLIENT_ID"</span>
-  <span class="n">config</span><span class="p">.</span><span class="nf">client_secret</span> <span class="o">=</span> <span class="s2">"CLIENT_SECRET"</span>
+<p>This project looks to simplify setting up these vendors and thus simplifying the onboarding of new marketplaces for the merchangs on the Arctic platform.</p>
+
+<p>An Arctic Vendor has two aspects to it: Collection and distribution.</p>
+<h1 id='installation'>Installation</h1>
+<blockquote>
+<p>To install in your project</p>
+</blockquote>
+<pre class="highlight ruby tab-ruby"><code><span class="n">gem</span> <span class="s1">'arctic-vendor'</span><span class="p">,</span> <span class="s1">'~&gt; 2.2'</span>
+</code></pre><pre class="highlight php tab-php"><code>/*
+   # composer.json
+   {
+     "require": {
+       "vendor/arctic-vendor": "^2.2"
+     }
+   }
+
+   curl -sS https://getcomposer.org/installer | php
+
+   php composer.phar install
+*/
+require 'vendor/autoload.php';
+</code></pre><pre class="highlight python tab-python"><code><span class="n">pip</span> <span class="n">install</span> <span class="n">arctic</span><span class="o">-</span><span class="n">vendor</span>
+</code></pre>
+<p>The Arctic Vendor is available on several different, popular distribution
+platforms including python, <a href="https://rubygems.org/gems/arctic-vendor">ruby</a>, and
+php,or you can download the <a href="https://github.com/YouWeApS/arctic-vendor">ruby source</a>.</p>
+<h1 id='setup'>Setup</h1>
+<p>In order to connect to the Arctici Core API, you need to have a Vendor Token,
+and you need to store this token in the <code>ARCTIC_CORE_API_TOKEN</code> environment
+variable.</p>
+
+<p>If you need to run your application against another environment you can override
+the URL by setting the <code>ARCTIC_CORE_API_URL</code> environment variable.</p>
+<h1 id='collecting-products'>Collecting products</h1>
+<blockquote>
+<p>Collect products from the marketplace</p>
+</blockquote>
+<pre class="highlight ruby tab-ruby"><code><span class="no">Arctic</span><span class="o">::</span><span class="no">Vendor</span><span class="p">.</span><span class="nf">collect_products</span> <span class="k">do</span> <span class="o">|</span><span class="n">shop</span><span class="o">|</span>
+  <span class="c1"># Connect to the marketplace and retrieve the products for the shop</span>
 <span class="k">end</span>
 </code></pre>
+<p>First, initialize the <code>Vendor.collect_products</code> method to receive each of the
+shops that your vendor should process.</p>
+
+<p>Then retrieve the products for that shop, and return them to the block, and the
+Vendor Project will send them to the Core API.</p>
+<h1 id='distributing-products'>Distributing products</h1>
 <blockquote>
-<p>Make sure to replace <code>YOUR_CLIENT_ID</code> and <code>YOUR_CLIENT_SECRET</code> with the information from the account given to you.</p>
+<p>Distribute products to the marketplace</p>
 </blockquote>
-
-<p>After we have setup an account for you, you will get a <code>CLIENT_ID</code> and <code>CLIENT_SECRET</code>.</p>
-
-<p>The <code>CLIENT_ID</code> and the <code>CLIENT_SECRET</code> should be stored inside your application in a secure way.</p>
-
-<p>To get a set of credentials, please <a href="mailto:info@youwe.dk">get in touch</a> with us.</p>
-<h1 id='authentication'>Authentication</h1><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'arctic/ui'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Arctic</span><span class="o">::</span><span class="no">UI</span><span class="o">::</span><span class="no">API</span><span class="p">.</span><span class="nf">new</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span>
+<pre class="highlight ruby tab-ruby"><code><span class="no">Arctic</span><span class="o">::</span><span class="no">Vendor</span><span class="p">.</span><span class="nf">distribute_products</span> <span class="k">do</span> <span class="o">|</span><span class="n">shop</span><span class="p">,</span> <span class="n">products</span><span class="o">|</span>
+  <span class="c1"># Connect to the marketplace and publish the products to the shop</span>
+<span class="k">end</span>
 </code></pre>
-<p>The <code>email</code> and <code>password</code> should be supplied by the user. The user should be associated with your account.</p>
+<p>First, initialize the <code>Vendor.distribute_products</code> method to receive each of the
+shops and related products to distribute to the marketplace.</p>
 
-<p>You can setup, create and manage users for your account in your <a href="https://arctic.com/backoffice">Arctic Backoffice</a>.</p>
+<p>Then connect to the marketplace and distribute the products to the shop.</p>
 
-<aside class="notice">For the rest of the documentation it's assumes that you have sucessfully completed the Configuration and Authentication steps.</aside>
-<h1 id='account'>Account</h1><h2 id='get-account-information'>Get account information</h2><pre class="highlight ruby tab-ruby"><code><span class="n">api</span><span class="p">.</span><span class="nf">get_account</span>
-</code></pre>
-<blockquote>
-<p>Example response</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"735108ed-55ef-4314-8295-b57fb0d1e05c"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bob's webshop"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"throttling"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"current"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>The user&#39;s account represents the account object. This is the central object that all users and shops are related to. This also holds your rate limit information (see the Rate Limiting section).</p>
-<h2 id='update-account-information'>Update account information</h2><pre class="highlight ruby tab-ruby"><code><span class="n">api</span><span class="p">.</span><span class="nf">update_account</span> <span class="ss">name: </span><span class="s1">'New Account Name'</span>
-</code></pre>
-<blockquote>
-<p>Example response</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"735108ed-55ef-4314-8295-b57fb0d1e05c"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Account Name"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"throttling"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"current"</span><span class="p">:</span><span class="w"> </span><span class="mi">74</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Possible account attributes you can update</p>
+<!-- # Authentication
 
-<table><thead>
-<tr>
-<th>Attribute</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>name</td>
-<td>The human readable name of your account</td>
-</tr>
-</tbody></table>
-<h1 id='shops'>Shops</h1><h2 id='list-shops'>List shops</h2><pre class="highlight ruby tab-ruby"><code><span class="n">api</span><span class="p">.</span><span class="nf">get_shops</span>
-</code></pre>
-<blockquote>
-<p>Example response</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2270b57a-80ee-4a44-9cd3-014c0469b39d"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Danish shop"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a30c348a-0396-4c86-8aee-3af3c782862c"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Swedish shop"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This will return a list of the shops available on your account.</p>
-<h2 id='update-an-existing-shop-39-s-information'>Update an existing shop&#39;s information</h2><pre class="highlight ruby tab-ruby"><code><span class="n">api</span><span class="p">.</span><span class="nf">update_shops</span> <span class="ss">id: </span><span class="s1">'a30c348a-0396-4c86-8aee-3af3c782862c'</span><span class="p">,</span> <span class="ss">name: </span><span class="s1">'Norwegian shop'</span>
-</code></pre>
-<blockquote>
-<p>Example response</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a30c348a-0396-4c86-8aee-3af3c782862c"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Norwegian shop"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Possible shop attributes to update</p>
+> To authorize, use this code:
 
-<table><thead>
-<tr>
-<th>Attribute</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>The human readable identifier of the shop on the Arctic platform</td>
-</tr>
-<tr>
-<td>preprocessors</td>
-<td>Array</td>
-<td>A list of preprocessor IDs to use for your shop</td>
-</tr>
-</tbody></table>
-<h1 id='preprocessors'>Preprocessors</h1><h2 id='list-available-preprocessors'>List available preprocessors</h2><pre class="highlight ruby tab-ruby"><code><span class="n">api</span><span class="p">.</span><span class="nf">get_preprocessors</span>
-</code></pre>
-<blockquote>
-<p>Example response</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8680cc9b-12d5-4bbd-a4ff-f176ef90d676"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dandomain"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"062da138-c0c1-46b2-b0fd-b43f9a2ad888"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Amazon UK"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>A preprocessor represents a connection between where you&#39;re hosting your webshop (e.g. Dandomain) and our system. A preprocessor will pull the items from your system into the Arctic system, from where they will be distributed throug Postprocessors.</p>
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+```
+
+```shell
+# With shell, you can just pass the correct header with each request
+curl "api_endpoint_here"
+  -H "Authorization: meowmeowmeow"
+```
+
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+```
+
+> Make sure to replace `meowmeowmeow` with your API key.
+
+Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+
+Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+
+`Authorization: meowmeowmeow`
+
+<aside class="notice">
+You must replace <code>meowmeowmeow</code> with your personal API key.
+</aside>
+
+# Kittens
+
+## Get All Kittens
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl "http://example.com/api/kittens"
+  -H "Authorization: meowmeowmeow"
+```
+
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+let kittens = api.kittens.get();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Fluffums",
+    "breed": "calico",
+    "fluffiness": 6,
+    "cuteness": 7
+  },
+  {
+    "id": 2,
+    "name": "Max",
+    "breed": "unknown",
+    "fluffiness": 5,
+    "cuteness": 10
+  }
+]
+```
+
+This endpoint retrieves all kittens.
+
+### HTTP Request
+
+`GET http://example.com/api/kittens`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+include_cats | false | If set to true, the result will also include cats.
+available | true | If set to false, the result will include kittens that have already been adopted.
+
+<aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside>
+
+## Get a Specific Kitten
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get(2)
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get(2)
+```
+
+```shell
+curl "http://example.com/api/kittens/2"
+  -H "Authorization: meowmeowmeow"
+```
+
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+let max = api.kittens.get(2);
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 2,
+  "name": "Max",
+  "breed": "unknown",
+  "fluffiness": 5,
+  "cuteness": 10
+}
+```
+
+This endpoint retrieves a specific kitten.
+
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+
+### HTTP Request
+
+`GET http://example.com/kittens/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the kitten to retrieve
+
+## Delete a Specific Kitten
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.delete(2)
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.delete(2)
+```
+
+```shell
+curl "http://example.com/api/kittens/2"
+  -X DELETE
+  -H "Authorization: meowmeowmeow"
+```
+
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+let max = api.kittens.delete(2);
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 2,
+  "deleted" : ":("
+}
+```
+
+This endpoint deletes a specific kitten.
+
+### HTTP Request
+
+`DELETE http://example.com/kittens/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the kitten to delete
+
+ -->
 <h1 id='errors'>Errors</h1>
 <blockquote>
 <p>Example error response</p>
@@ -440,6 +555,8 @@
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="php">php</a>
           </div>
       </div>
     </div>
