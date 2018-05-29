@@ -82,6 +82,20 @@ characteristics | Normalized product characteristics
 master | Product is master. Will have a Product ID value if this product is a variant of another.
 state | Last known product state. Can be <code>created</code>, <code>updated</code>, or <code>deleted</code>
 
+### Product characteristics
+
+Name | Description
+---- | -----------
+name | Human readable product name
+description | Human readable description of the product
+color | Color
+size | Size
+ean | EAN number
+price | Price without currency
+currency | [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code
+stock | Stock count
+images | Array of image URLs
+
 # Collecting products
 
 > Collect products from the marketplace
