@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;ruby&quot;,&quot;python&quot;,&quot;php&quot;]">
+  <body class="index" data-languages="[&quot;ruby&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,8 +212,6 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="php">php</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -222,9 +220,6 @@
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
-          </li>
-          <li>
-            <a href="#installation" class="toc-h1 toc-link" data-title="installation">Installation</a>
           </li>
           <li>
             <a href="#setup" class="toc-h1 toc-link" data-title="setup">Setup</a>
@@ -251,8 +246,9 @@
           </li>
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://arctic-project.dk/vendor/register' target="_blank">Register a Vendor</a></li>
+            <li><a href='https://arctic-project.io' target="_blank">Core API documentation</a></li>
+            <li><a href='https://github.com/YouWeApS/arctic-vendor/issues' target="_blank">Found a bug?</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -266,30 +262,21 @@
 <p>This project looks to simplify setting up these vendors and thus simplifying the onboarding of new marketplaces for the merchangs on the Arctic platform.</p>
 
 <p>An Arctic Vendor has two aspects to it: Collection and distribution.</p>
-<h1 id='installation'>Installation</h1>
+
+<p><strong>Collecting products</strong> means tranforming (possibly) unstructured product data
+from the marketplace into structured data.</p>
+
+<p><strong>Distributing products</strong> means sending structured products onto the connected
+marketplace.</p>
+<h1 id='setup'>Setup</h1>
 <blockquote>
 <p>To install in your project</p>
 </blockquote>
 <pre class="highlight ruby tab-ruby"><code><span class="n">gem</span> <span class="s1">'arctic-vendor'</span><span class="p">,</span> <span class="s1">'~&gt; 2.2'</span>
-</code></pre><pre class="highlight php tab-php"><code>/*
-   # composer.json
-   {
-     "require": {
-       "vendor/arctic-vendor": "^2.2"
-     }
-   }
-
-   curl -sS https://getcomposer.org/installer | php
-
-   php composer.phar install
-*/
-require 'vendor/autoload.php';
-</code></pre><pre class="highlight python tab-python"><code><span class="n">pip</span> <span class="n">install</span> <span class="n">arctic</span><span class="o">-</span><span class="n">vendor</span>
 </code></pre>
-<p>The Arctic Vendor is available on several different, popular distribution
-platforms including python, <a href="https://rubygems.org/gems/arctic-vendor">ruby</a>, and
-php,or you can download the <a href="https://github.com/YouWeApS/arctic-vendor">ruby source</a>.</p>
-<h1 id='setup'>Setup</h1>
+<p>First you must <a href="https://arctic-project.dk/vendor/register">register your Vendor</a>
+with the Core API to obtain a Vendor Token.</p>
+
 <p>In order to connect to the Arctici Core API, you need to have a Vendor Token,
 and you need to store this token in the <code>ARCTIC_CORE_API_TOKEN</code> environment
 variable.</p>
@@ -319,17 +306,24 @@ the URL by setting the <code>ARCTIC_CORE_API_URL</code> environment variable.</p
 </tr>
 <tr>
 <td>auth_config</td>
-<td>Marketplace uathentication information</td>
+<td>Sensitive marketplace authentication information</td>
 </tr>
 <tr>
 <td>config</td>
-<td>General configuration set for the shop</td>
+<td>Non-sensitive, general configuration set for the shop</td>
 </tr>
 <tr>
 <td>format_config</td>
 <td>JSON formatting instructions</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">
+All <code>*config</code> fields are filled or enhanced by the merchant when
+configuring the Vendor to distribute products through the Vendor's marketplace.
+When registering the vendor with the Core API, JSON schema definitions for these
+fields must be supplied by the Vendor developer.
+</aside>
 <h3 id='products'>Products</h3>
 <p>An array of product objects.</p>
 
@@ -361,7 +355,8 @@ the URL by setting the <code>ARCTIC_CORE_API_URL</code> environment variable.</p
 <p>Collect products from the marketplace</p>
 </blockquote>
 <pre class="highlight ruby tab-ruby"><code><span class="no">Arctic</span><span class="o">::</span><span class="no">Vendor</span><span class="p">.</span><span class="nf">collect_products</span> <span class="k">do</span> <span class="o">|</span><span class="n">shop</span><span class="o">|</span>
-  <span class="c1"># Connect to the marketplace and retrieve the products for the shop</span>
+  <span class="c1"># 1. Connect to the marketplace and retrieve the products for the shop</span>
+  <span class="c1"># 2. Format each of the products according to the shop's format_config</span>
 <span class="k">end</span>
 </code></pre>
 <p>First, initialize the <code>Vendor.collect_products</code> method to receive each of the
@@ -370,7 +365,8 @@ shops that your vendor should process.</p>
 <p>Then retrieve the products for that shop, and return them to the block, and the
 Vendor Project will send them to the Core API.</p>
 
-<p>The products you return to the block should be a JSON array of products, each formatted according to the <code>shop</code>s <code>format_config</code> block.</p>
+<p>The products you return to the block should be a JSON array of products, each
+formatted according to the <code>shop</code>s <code>format_config</code> block.</p>
 <h1 id='distributing-products'>Distributing products</h1>
 <blockquote>
 <p>Distribute products to the marketplace</p>
@@ -402,11 +398,11 @@ shops and related products to distribute to the marketplace.</p>
 </thead><tbody>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your Bearer token is incorrect or missing.</td>
+<td>Unauthorized -- Your Vendor token is incorrect or missing.</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- Your Bearer token doesn&#39;t have the proper scopes for this action.</td>
+<td>Forbidden -- Your Vendor token doesn&#39;t have the proper permissions for the action.</td>
 </tr>
 </tbody></table>
 
@@ -414,8 +410,6 @@ shops and related products to distribute to the marketplace.</p>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="php">php</a>
           </div>
       </div>
     </div>
