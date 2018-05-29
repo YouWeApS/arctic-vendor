@@ -83,6 +83,7 @@ RSpec.describe Arctic::Vendor do
   describe '.collect_products' do
     it 'yields the shop to the caller' do
       expect(described_class.api).to receive(:send_products).with(account1['id'], shop1['id'], [prod1]).and_return []
+      expect(described_class.api).to receive(:synchronized).with(account1['id'], shop1['id'])
       described_class.collect_products do |shop|
         [prod1]
       end
@@ -92,6 +93,7 @@ RSpec.describe Arctic::Vendor do
   describe '.distribute_products' do
     it 'yields the shop to the caller' do
       expect(described_class.api).to receive(:list_products).with(account1['id'], shop2['id']).and_return [prod1]
+      expect(described_class.api).to receive(:synchronized).with(account1['id'], shop2['id'])
       expect(Arctic.logger).to receive(:fatal).with(shop2)
       expect(Arctic.logger).to receive(:fatal).with([prod1])
       described_class.distribute_products do |shop, products|

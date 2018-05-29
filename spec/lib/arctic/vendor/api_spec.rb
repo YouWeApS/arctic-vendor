@@ -92,4 +92,14 @@ RSpec.describe Arctic::Vendor::API do
       expect(instance.list_products('account1', 'shop1')).to eql products
     end
   end
+
+  describe '#synchronized' do
+    it 'calls the right API endpoint' do
+      response = double body: '', status: 200
+      expect(instance.connection).to receive(:put)
+        .with("accounts/account1/shops/shop1/synchronized")
+        .and_return response
+      instance.synchronized('account1', 'shop1')
+    end
+  end
 end

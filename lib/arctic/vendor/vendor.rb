@@ -45,6 +45,7 @@ module Arctic
         each_shop do |shop, account|
           products = api.send_products account['id'], shop['id'], yield(shop)
           products_count += products.size
+          api.synchronized account['id'], shop['id']
         end
       end
 
@@ -63,6 +64,7 @@ module Arctic
           products = api.list_products account['id'], shop['id']
           products_count += products.size
           yield shop, products
+          api.synchronized account['id'], shop['id']
         end
       end
 

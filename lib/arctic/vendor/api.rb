@@ -49,6 +49,11 @@ module Arctic
         make_request :get, "accounts/#{account_id}/shops/#{shop_id}/products"
       end
 
+      # Marks the shop as synchronized by the vendor
+      def synchronized(account_id, shop_id)
+        make_request :put, "accounts/#{account_id}/shops/#{shop_id}/synchronized"
+      end
+
       private
 
         def make_batch_request(*args, **options)
