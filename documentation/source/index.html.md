@@ -3,12 +3,11 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - ruby
-  - python
-  - php
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://arctic-project.dk/vendor/register' target="_blank">Register a Vendor</a>
+  - <a href='https://arctic-project.io' target="_blank">Core API documentation</a>
+  - <a href='https://github.com/YouWeApS/arctic-vendor/issues' target="_blank">Found a bug?</a>
 
 includes:
   - errors
@@ -26,7 +25,14 @@ This project looks to simplify setting up these vendors and thus simplifying the
 
 An Arctic Vendor has two aspects to it: Collection and distribution.
 
-# Installation
+**Collecting products** means tranforming (possibly) unstructured product data
+from the marketplace into structured data.
+
+**Distributing products** means sending structured products onto the connected
+marketplace.
+
+
+# Setup
 
 > To install in your project
 
@@ -34,31 +40,8 @@ An Arctic Vendor has two aspects to it: Collection and distribution.
 gem 'arctic-vendor', '~> 2.2'
 ```
 
-```php
-/*
-   # composer.json
-   {
-     "require": {
-       "vendor/arctic-vendor": "^2.2"
-     }
-   }
-
-   curl -sS https://getcomposer.org/installer | php
-
-   php composer.phar install
-*/
-require 'vendor/autoload.php';
-```
-
-```python
-pip install arctic-vendor
-```
-
-The Arctic Vendor is available on several different, popular distribution
-platforms including python, [ruby](https://rubygems.org/gems/arctic-vendor), and
-php,or you can download the [ruby source](https://github.com/YouWeApS/arctic-vendor).
-
-# Setup
+First you must [register your Vendor](https://arctic-project.dk/vendor/register)
+with the Core API to obtain a Vendor Token.
 
 In order to connect to the Arctici Core API, you need to have a Vendor Token,
 and you need to store this token in the `ARCTIC_CORE_API_TOKEN` environment
@@ -78,9 +61,16 @@ Parameter | Description
 id | Shop ID
 name | Human friendly shop name
 synced_at | [ISO 8601 HTTP date](https://en.wikipedia.org/wiki/ISO_8601)
-auth_config | Marketplace uathentication information
-config | General configuration set for the shop
+auth_config | Sensitive marketplace authentication information
+config | Non-sensitive, general configuration set for the shop
 format_config | JSON formatting instructions
+
+<aside class="notice">
+All <code>*config</code> fields are filled or enhanced by the merchant when
+configuring the Vendor to distribute products through the Vendor's marketplace.
+When registering the vendor with the Core API, JSON schema definitions for these
+fields must be supplied by the Vendor developer.
+</aside>
 
 ### Products
 
@@ -99,7 +89,8 @@ state | Last known product state. Can be <code>created</code>, <code>updated</co
 
 ```ruby
 Arctic::Vendor.collect_products do |shop|
-  # Connect to the marketplace and retrieve the products for the shop
+  # 1. Connect to the marketplace and retrieve the products for the shop
+  # 2. Format each of the products according to the shop's format_config
 end
 ```
 
@@ -109,7 +100,8 @@ shops that your vendor should process.
 Then retrieve the products for that shop, and return them to the block, and the
 Vendor Project will send them to the Core API.
 
-The products you return to the block should be a JSON array of products, each formatted according to the `shop`s `format_config` block.
+The products you return to the block should be a JSON array of products, each
+formatted according to the `shop`s `format_config` block.
 
 # Distributing products
 

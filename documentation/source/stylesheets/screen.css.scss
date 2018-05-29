@@ -499,6 +499,11 @@ html, body {
     color: $white;
     display: inline-table;
 
+    code {
+      color: $white;
+      background-color: rgba(0,0,0,0.4);
+    }
+
     &.warning {
       background-color: $aside-warning-bg;
     }

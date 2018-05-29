@@ -13,5 +13,5 @@ The Arctic Core API uses the [HTTP status codes](httpstatuses.com) list. Here is
 
 Error Code | Meaning
 ---------- | -------
-401 | Unauthorized -- Your Bearer token is incorrect or missing.
-403 | Forbidden -- Your Bearer token doesn't have the proper scopes for this action.
+401 | Unauthorized -- Your Vendor token is incorrect or missing.
+403 | Forbidden -- Your Vendor token doesn't have the proper permissions for the action.
