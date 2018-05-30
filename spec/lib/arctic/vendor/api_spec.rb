@@ -83,13 +83,13 @@ RSpec.describe Arctic::Vendor::API do
           id: 'product1',
           characteristics: { color: :black },
           master: true,
-          tate: nil,
+          state: nil,
         },
         {
           id: 'product2',
           characteristics: {},
           master: true,
-          tate: nil,
+          state: nil,
         },
       ].as_json
     end

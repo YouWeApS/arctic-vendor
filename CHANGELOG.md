@@ -12,3 +12,4 @@
 
 * When retrieving products from the Core API it will now be an array of Product objects.
 * Introduce Product#update_state to update each product state
+* Product#characteristics is now a Hashie::Mash to allow for dot-notation

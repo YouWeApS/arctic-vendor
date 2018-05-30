@@ -1,7 +1,16 @@
+require 'hashie'
+
 module Arctic
   module Vendor
     class Product
-      attr_reader :id, :characteristics, :api, :account_id, :shop_id
+      attr_reader \
+        :id,
+        :characteristics,
+        :api,
+        :account_id,
+        :shop_id,
+        :state,
+        :master
 
       def initialize(account_id, shop_id, product_hash, api_instance)
         @api = api_instance
@@ -10,7 +19,10 @@ module Arctic
         @account_id = account_id
 
         @id = product_hash.fetch 'id'
-        @characteristics = product_hash.fetch 'characteristics'
+        @characteristics = Hashie::Mash.new product_hash.fetch 'characteristics'
+
+        @state = product_hash.fetch 'state'
+        @master = product_hash.fetch 'master'
       end
 
       def update_state(state)
