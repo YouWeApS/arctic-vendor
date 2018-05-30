@@ -29,6 +29,7 @@ RSpec.describe Arctic::Vendor::Product do
 
     it 'provides dot-notation' do
       expect(instance.characteristics.color).to eql 'black'
+      expect(instance.characteristics.ean).to be_nil
     end
   end
 

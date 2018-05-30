@@ -48,8 +48,9 @@ module Arctic
 
       # Retrieve products from the Core API
       def list_products(account_id, shop_id)
-        products = make_request :get, "accounts/#{account_id}/shops/#{shop_id}/products"
-        products.collect { |prod| Arctic::Vendor::Product.new account_id, shop_id, prod, self }
+        make_paginated_request(:get, "accounts/#{account_id}/shops/#{shop_id}/products") do |products|
+          yield products.collect { |prod| Arctic::Vendor::Product.new account_id, shop_id, prod, self }
+        end
       end
 
       # Marks the shop as synchronized by the vendor
@@ -69,7 +70,7 @@ module Arctic
           Arctic::Vendor.threaded(batches) { |batch| make_request *args, **(options.merge(body: batch)) }
         end
 
-        def make_request(method, path, body: {}, params: {})
+        def raw_request(method, path, body: {}, params: {})
           # Remove preceeding slash to avoid going from base url /v1 to /
           path = path.reverse.chomp('/').reverse
 
@@ -82,6 +83,10 @@ module Arctic
 
             r.body = body.to_json if body.any?
           end
+        end
+
+        def make_request(method, path, body: {}, params: {})
+          response = raw_request method, path, body: body, params: params
 
           json = begin
             JSON.parse(response.body)
@@ -94,6 +99,19 @@ module Arctic
           Arctic.logger.info "#{method.to_s.upcase} #{path}: #{response.status}"
 
           json
+        end
+
+        def make_paginated_request(method, path, body: {}, params: {})
+          response = raw_request method, path, body: body, params: params
+          page = response.headers['page'] || 1
+          per_page = response.headers['per-page'] || 1
+          total_record = response.headers['total'] || 1
+          pages = (total_record.to_f / per_page.to_f).ceil
+
+          Arctic::Vendor.threaded (1..pages.size).to_a do |n|
+            params = params.merge page: n
+            yield make_request method, path, body: body, params: body
+          end
         end
     end
   end

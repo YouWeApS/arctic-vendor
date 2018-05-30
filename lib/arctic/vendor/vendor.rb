@@ -61,9 +61,10 @@ module Arctic
 
       seconds = time do
         each_shop(type: :target) do |shop, account|
-          products = api.list_products account['id'], shop['id']
-          products_count += products.size
-          yield shop, products
+          api.list_products(account['id'], shop['id']) do |products|
+            products_count += products.size
+            yield shop, products
+          end
           api.synchronized account['id'], shop['id']
         end
       end

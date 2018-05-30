@@ -7,8 +7,7 @@ module Arctic
         end
 
         def method_missing(name, *args)
-          char = @characteristics.fetch name.to_s, nil
-          char || super(name, *args)
+          @characteristics[name.to_s]
         end
       end
 

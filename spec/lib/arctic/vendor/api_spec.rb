@@ -95,17 +95,18 @@ RSpec.describe Arctic::Vendor::API do
     end
 
     it 'calls the right API endpoint' do
-      response = double body: products.to_json, status: 200
+      response = double body: products.to_json, status: 200, headers: {}
       expect(instance.connection).to receive(:get)
+        .at_least(:once)
         .with("accounts/account1/shops/shop1/products")
         .and_return response
 
-      product = instance.list_products('account1', 'shop1').first
-      expect(product).to be_a Arctic::Vendor::Product
-      expect(product.id).to eql('product1')
-      expect(product.characteristics).to eql({
-        color: 'black',
-      }.as_json)
+      instance.list_products('account1', 'shop1') do |products|
+        product = products.first
+        expect(product).to be_a Arctic::Vendor::Product
+        expect(product.id).to eql('product1')
+        expect(product.characteristics.color).to eql('black')
+      end
     end
   end
 
