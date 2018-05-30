@@ -1,8 +1,17 @@
-require 'hashie'
-
 module Arctic
   module Vendor
     class Product
+      class Characteristics
+        def initialize(characteristics)
+          @characteristics = characteristics
+        end
+
+        def method_missing(name, *args)
+          char = @characteristics.fetch name.to_s, nil
+          char || super(name, *args)
+        end
+      end
+
       attr_reader \
         :id,
         :characteristics,
@@ -19,7 +28,7 @@ module Arctic
         @account_id = account_id
 
         @id = product_hash.fetch 'id'
-        @characteristics = Hashie::Mash.new product_hash.fetch 'characteristics'
+        @characteristics = Characteristics.new product_hash.fetch 'characteristics'
 
         @state = product_hash.fetch 'state'
         @master = product_hash.fetch 'master'

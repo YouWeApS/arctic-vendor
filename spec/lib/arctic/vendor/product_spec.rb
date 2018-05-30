@@ -25,8 +25,11 @@ RSpec.describe Arctic::Vendor::Product do
 
   describe '#characteristics' do
     subject { instance.characteristics }
-    it { is_expected.to be_a Hashie::Mash } # allow Product.characteristics.color
-    it { is_expected.to eql({ color: :black }.as_json) }
+    it { is_expected.to be_a Arctic::Vendor::Product::Characteristics }
+
+    it 'provides dot-notation' do
+      expect(instance.characteristics.color).to eql 'black'
+    end
   end
 
   describe '#state' do
