@@ -14,3 +14,4 @@
 * Introduce Product#update_state to update each product state
 * Product#characteristics is now a Hashie::Mash to allow for dot-notation
 * Allow traversing API pagination with API#make_paginated_request
+* Allow setting batch size for Arctic::Vendor#distribute_products

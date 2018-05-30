@@ -47,8 +47,8 @@ module Arctic
       end
 
       # Retrieve products from the Core API
-      def list_products(account_id, shop_id)
-        make_paginated_request(:get, "accounts/#{account_id}/shops/#{shop_id}/products") do |products|
+      def list_products(account_id, shop_id, **params)
+        make_paginated_request(:get, "accounts/#{account_id}/shops/#{shop_id}/products", params: params) do |products|
           yield products.collect { |prod| Arctic::Vendor::Product.new account_id, shop_id, prod, self }
         end
       end
@@ -96,7 +96,7 @@ module Arctic
 
           raise json['error'] if json.is_a?(Hash) && json['error']
 
-          Arctic.logger.info "#{method.to_s.upcase} #{path}: #{response.status}"
+          Arctic.logger.info "#{method.to_s.upcase} #{path}?#{params.to_query}: #{response.status}"
 
           json
         end
@@ -110,7 +110,7 @@ module Arctic
 
           Arctic::Vendor.threaded (1..pages.size).to_a do |n|
             params = params.merge page: n
-            yield make_request method, path, body: body, params: body
+            yield make_request method, path, body: body, params: params
           end
         end
     end

@@ -122,9 +122,9 @@ formatted according to the `shop`s `format_config` block.
 > Distribute products to the marketplace
 
 ```ruby
-Arctic::Vendor.distribute_products do |shop, products|
+Arctic::Vendor.distribute_products(batch_size: 300) do |shop, product_batch|
   # 1. Connect to the marketplace and publish the products to the shop
-  products.each do |product|
+  product_batch.each do |product|
     # 2. As each of the products are published, update the state
     product.update_state 'created'
   end
@@ -132,9 +132,13 @@ end
 ```
 
 First, initialize the `Vendor.distribute_products` method to receive each of the
-shops and related products to distribute to the marketplace.
+shops and batches of related products to distribute to the marketplace.
 
 Then connect to the marketplace and distribute the products to the shop.
+
+<aside class="notice">
+<code>Arctic::Vendor.distribute_products</code> returns products in batches of 100 by default.
+</aside>
 
 # Going live
 

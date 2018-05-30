@@ -55,13 +55,13 @@ module Arctic
 
     # Fetches all products from the Core API and distributes them to the
     # target vendors
-    def distribute_products
+    def distribute_products(batch_size: 100)
       Arctic.logger.info "Distributing products to target vendor..."
       products_count = 0
 
       seconds = time do
         each_shop(type: :target) do |shop, account|
-          api.list_products(account['id'], shop['id']) do |products|
+          api.list_products(account['id'], shop['id'], per_page: batch_size) do |products|
             products_count += products.size
             yield shop, products
           end
