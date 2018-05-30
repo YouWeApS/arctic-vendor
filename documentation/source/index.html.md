@@ -103,6 +103,7 @@ images | Array of image URLs
 ```ruby
 Arctic::Vendor.collect_products do |shop|
   # 1. Connect to the marketplace and retrieve the products for the shop
+
   # 2. Format each of the products according to the shop's format_config
 end
 ```
@@ -122,7 +123,11 @@ formatted according to the `shop`s `format_config` block.
 
 ```ruby
 Arctic::Vendor.distribute_products do |shop, products|
-  # Connect to the marketplace and publish the products to the shop
+  # 1. Connect to the marketplace and publish the products to the shop
+  products.each do |product|
+    # 2. As each of the products are published, update the state
+    product.update_state 'created'
+  end
 end
 ```
 

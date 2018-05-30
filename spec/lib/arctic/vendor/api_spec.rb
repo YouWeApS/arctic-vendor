@@ -79,8 +79,18 @@ RSpec.describe Arctic::Vendor::API do
   describe '#list_products' do
     let(:products) do
       [
-        { id: 'product1' },
-        { id: 'product2' },
+        {
+          id: 'product1',
+          characteristics: { color: :black },
+          master: true,
+          tate: nil,
+        },
+        {
+          id: 'product2',
+          characteristics: {},
+          master: true,
+          tate: nil,
+        },
       ].as_json
     end
 
@@ -89,7 +99,13 @@ RSpec.describe Arctic::Vendor::API do
       expect(instance.connection).to receive(:get)
         .with("accounts/account1/shops/shop1/products")
         .and_return response
-      expect(instance.list_products('account1', 'shop1')).to eql products
+
+      product = instance.list_products('account1', 'shop1').first
+      expect(product).to be_a Arctic::Vendor::Product
+      expect(product.id).to eql('product1')
+      expect(product.characteristics).to eql({
+        color: 'black',
+      }.as_json)
     end
   end
 
@@ -100,6 +116,16 @@ RSpec.describe Arctic::Vendor::API do
         .with("accounts/account1/shops/shop1/synchronized")
         .and_return response
       instance.synchronized('account1', 'shop1')
+    end
+  end
+
+  describe '#update_product_state' do
+    it 'calls the right API endpoint' do
+      response = double body: '', status: 200
+      expect(instance.connection).to receive(:put)
+        .with("accounts/account1/shops/shop1/products/product1/state/created")
+        .and_return response
+      instance.update_product_state('account1', 'shop1', 'product1', 'created')
     end
   end
 end
