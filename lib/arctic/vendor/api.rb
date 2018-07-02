@@ -53,6 +53,11 @@ module Arctic
         end
       end
 
+      def get_product(account_id, shop_id, product_id)
+        product_id = URI.escape product_id
+        make_request :get, "accounts/#{account_id}/shops/#{shop_id}/products/#{product_id}"
+      end
+
       # Marks the shop as synchronized by the vendor
       def synchronized(account_id, shop_id)
         make_request :put, "accounts/#{account_id}/shops/#{shop_id}/synchronized"
@@ -102,13 +107,16 @@ module Arctic
         end
 
         def make_paginated_request(method, path, body: {}, params: {})
-          response = raw_request method, path, body: body, params: params
+          response = raw_request :head, path, body: body, params: params
+          Arctic.logger.debug "Pagination response headers: #{response.headers}"
+
           page = response.headers['page'] || 1
           per_page = response.headers['per-page'] || 1
           total_record = response.headers['total'] || 1
           pages = (total_record.to_f / per_page.to_f).ceil
+          collection = (1..pages).to_a
 
-          Arctic::Vendor.threaded (1..pages.size).to_a do |n|
+          Arctic::Vendor.threaded collection do |n|
             params = params.merge page: n
             yield make_request method, path, body: body, params: params
           end

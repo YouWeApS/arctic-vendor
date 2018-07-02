@@ -80,13 +80,13 @@ RSpec.describe Arctic::Vendor::API do
     let(:products) do
       [
         {
-          id: 'product1',
+          sku: 'product1',
           characteristics: { color: :black },
           master: true,
           state: nil,
         },
         {
-          id: 'product2',
+          sku: 'product2',
           characteristics: {},
           master: true,
           state: nil,
@@ -104,7 +104,7 @@ RSpec.describe Arctic::Vendor::API do
       instance.list_products('account1', 'shop1') do |products|
         product = products.first
         expect(product).to be_a Arctic::Vendor::Product
-        expect(product.id).to eql('product1')
+        expect(product.sku).to eql('product1')
         expect(product.characteristics.color).to eql('black')
       end
     end

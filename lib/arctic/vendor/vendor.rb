@@ -23,8 +23,8 @@ module Arctic
     end
     module_function :each_shop
 
-    def api
-      @api ||= Arctic::Vendor::API.new
+    def api(*args)
+      @api ||= Arctic::Vendor::API.new(*args)
     end
     module_function :api
 

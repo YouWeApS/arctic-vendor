@@ -9,7 +9,7 @@ RSpec.describe Arctic::Vendor::Product do
 
   let(:data) do
     {
-      id: 'product1',
+      sku: 'product1',
       characteristics: {
         color: :black,
       },
@@ -18,8 +18,8 @@ RSpec.describe Arctic::Vendor::Product do
     }.as_json
   end
 
-  describe '#id' do
-    subject { instance.id }
+  describe '#sku' do
+    subject { instance.sku }
     it { is_expected.to eql 'product1' }
   end
 
