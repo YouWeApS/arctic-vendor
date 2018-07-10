@@ -15,6 +15,9 @@ RSpec.describe Arctic::Vendor::Product do
       },
       master: 'product2',
       state: :deleted,
+      images: [
+        'https://google.com/1',
+      ],
     }.as_json
   end
 
@@ -31,6 +34,11 @@ RSpec.describe Arctic::Vendor::Product do
       expect(instance.characteristics.color).to eql 'black'
       expect(instance.characteristics.ean).to be_nil
     end
+  end
+
+  describe '#images' do
+    subject { instance.images }
+    it { is_expected.to match_array ['https://google.com/1'] }
   end
 
   describe '#state' do

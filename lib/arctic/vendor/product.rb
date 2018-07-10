@@ -12,19 +12,16 @@ module Arctic
       end
 
       attr_reader \
+        :product_hash,
         :sku,
         :characteristics,
         :api,
         :account_id,
-        :shop_id,
-        :state,
-        :master,
-        :price,
-        :currency,
-        :categories,
-        :images
+        :shop_id
 
       def initialize(account_id, shop_id, product_hash, api_instance)
+        @product_hash = product_hash
+
         @api = api_instance
 
         @shop_id = shop_id
@@ -32,15 +29,18 @@ module Arctic
 
         @sku = product_hash.fetch 'sku'
         @characteristics = Characteristics.new product_hash.fetch 'characteristics'
-
-        @categories = product_hash.fetch 'categories', []
-
-        @state = product_hash.fetch 'state'
-        @master = product_hash.fetch 'master'
       end
 
       def update_state(state)
         api.update_product_state account_id, shop_id, sku, state
+      end
+
+      def method_missing(name, *args)
+        if product_hash.stringify_keys.keys.include? name.to_s
+          product_hash.stringify_keys[name.to_s]
+        else
+          super name, *args
+        end
       end
     end
   end
