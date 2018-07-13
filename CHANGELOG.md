@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.2.5
+
+* Added api method for adding orders to the Core API
+
 ### 0.2.1
 
 * Added Arctic::Vendor::API#list_products method to allow vendors to retrieve products from the Core API - Emil Kampp <emil@youwe.dk>

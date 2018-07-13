@@ -46,6 +46,12 @@ module Arctic
         end
       end
 
+      def collect_orders(account_id, shop_id, orders)
+        orders.tap do |ox|
+          make_batch_request :post, "accounts/#{account_id}/shops/#{shop_id}/orders", body: ox
+        end
+      end
+
       # Retrieve products from the Core API
       def list_products(account_id, shop_id, **params)
         make_paginated_request(:get, "accounts/#{account_id}/shops/#{shop_id}/products", params: params) do |products|

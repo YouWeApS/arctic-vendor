@@ -40,6 +40,20 @@ RSpec.describe Arctic::Vendor::API do
     end
   end
 
+  describe '#collect_orders' do
+    let(:order1) { { item_id: 1 } }
+    let(:order2) { { item_id: 2 } }
+
+    it 'calls the right API endpoint' do
+      response = double body: '', status: 202
+      expect(instance.connection).to receive(:post)
+        .with("accounts/account1/shops/shop1/orders")
+        .and_return response
+      expect(instance.collect_orders('account1', 'shop1', [order1, order2]))
+        .to(match_array [order1, order2])
+    end
+  end
+
   describe '#list_shops' do
     let(:shops) do
       [
@@ -73,6 +87,16 @@ RSpec.describe Arctic::Vendor::API do
         .exactly(2).times
         .and_return response
       expect(instance.send_products('account1', 'shop1', products)).to eql products
+    end
+  end
+
+  describe '#collect_orders' do
+    let(:orders) do
+      [
+        {
+
+        }
+      ]
     end
   end
 
