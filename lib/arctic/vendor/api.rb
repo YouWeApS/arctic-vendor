@@ -36,9 +36,26 @@ module Arctic
 
       # Send products to the Core API
       def send_products(shop_id, products)
-        Arctic::Vendor.threaded(products) do |prod|
-          make_request :post, "shops/#{shop_id}/products", params: prod
+        Arctic::Vendor.threaded(products.dup) do |prod|
+          begin
+            make_request :post, "shops/#{shop_id}/products", body: prod
+          rescue => e
+            Arctic.logger.error "Failed to send product (#{e.class}): #{e.message} -- #{prod}"
+          end
         end
+        products
+      end
+
+      # Send products to the Core API
+      def send_currencies(shop_id, currencies)
+        Arctic::Vendor.threaded(currencies.dup) do |curr|
+          begin
+            make_request :put, "shops/#{shop_id}/currencies", body: curr
+          rescue => e
+            Arctic.logger.error "Failed to send currency (#{e.class}): #{e.message} -- #{curr}"
+          end
+        end
+        currencies
       end
 
       # Retrieve products from the Core API
@@ -56,7 +73,11 @@ module Arctic
 
       def update_products(shop_id, products, **params)
         Arctic::Vendor.threaded(products) do |prod|
-          update_product shop_id, prod.fetch('sku'), **params
+          begin
+            update_product shop_id, prod.fetch('sku'), **params
+          rescue KeyError => e
+            Arctic.logger.error "Invalid product: #{e.message} -- #{prod}"
+          end
         end
       end
 

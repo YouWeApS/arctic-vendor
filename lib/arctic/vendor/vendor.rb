@@ -15,11 +15,27 @@ module Arctic
     module_function :threaded
 
     def each_shop(type = :collection)
-      api.list_shops[type].each do |shop|
+      api.list_shops.with_indifferent_access[type].each do |shop|
         yield shop
       end
     end
     module_function :each_shop
+
+    def collect_currencies(&block)
+      Arctic.logger.info "Collecting currencies from collection shop"
+
+      currencies_count = 0
+
+      seconds = time do
+        each_shop(:collection) do |shop|
+          currencies = api.send_currencies shop['id'], yield(shop)
+          currencies_count += currencies.size
+        end
+      end
+
+      Arctic.logger.info "Collected #{currencies_count} exchange rates in #{seconds} seconds."
+    end
+    module_function :collect_currencies
 
     def api(*args)
       @api ||= Arctic::Vendor::API.new(*args)
@@ -36,14 +52,13 @@ module Arctic
     # Fetches all products from all shops, where this vendor is the source
     # vendor and pushes them to the Core API.
     def collect_products(&block)
-      Arctic.logger.info "Collecting products from source vendor..."
+      Arctic.logger.info "Collecting products from vendor..."
       products_count = 0
 
       seconds = time do
         each_shop(:collection) do |shop|
           products = api.send_products shop['id'], yield(shop)
           products_count += products.size
-          api.update_products shop['id'], products, dispersed_at: Time.now.to_s(:db)
         end
       end
 
