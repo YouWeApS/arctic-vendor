@@ -14,11 +14,9 @@ module Arctic
     end
     module_function :threaded
 
-    def each_shop(type: :source)
-      api.list_accounts.each do |account|
-        api.list_shops(account['id']).each do |shop|
-          yield shop, account if shop['type'] == type.to_s
-        end
+    def each_shop(type = :collection)
+      api.list_shops[type].each do |shop|
+        yield shop
       end
     end
     module_function :each_shop
@@ -42,46 +40,16 @@ module Arctic
       products_count = 0
 
       seconds = time do
-        each_shop do |shop, account|
-          products = api.send_products account['id'], shop['id'], yield(shop)
+        each_shop(:collection) do |shop|
+          products = api.send_products shop['id'], yield(shop)
           products_count += products.size
-          api.synchronized account['id'], shop['id']
+          api.update_products shop['id'], products, dispersed_at: Time.now.to_s(:db)
         end
       end
 
       Arctic.logger.info "Collected #{products_count} products in #{seconds} seconds"
     end
     module_function :collect_products
-
-    # Collect orders from target shops
-    def collect_orders(&block)
-      each_shop(type: :target) do |shop|
-        orders = yield shop
-        api.collect_orders shop['account_id'], shop['id'], orders
-      end
-    end
-    module_function :collect_orders
-
-    # Collect orders to source shops
-    def distribute_orders(**params)
-      params.reverse_merge! \
-        batch_size: 100
-
-      orders_count = 0
-
-      seconds = time do
-        each_shop do |shop, account|
-          api.list_orders(account['id'], shop['id'], **params) do |orders|
-            orders_count += orders.size
-            yield shop, orders
-          end
-          api.synchronized account['id'], shop['id']
-        end
-      end
-
-      Arctic.logger.info "Distributed #{orders_count} orders in #{seconds} seconds"
-    end
-    module_function :collect_orders
 
     # Fetches all products from the Core API and distributes them to the
     # target vendors
@@ -93,12 +61,12 @@ module Arctic
         batch_size: 100
 
       seconds = time do
-        each_shop(type: :target) do |shop, account|
-          api.list_products(account['id'], shop['id'], params) do |products|
+        each_shop(:dispersal) do |shop|
+          api.list_products(shop['id'], params) do |products|
             products_count += products.size
             yield shop, products
+            api.update_products shop['id'], products, dispersed_at: Time.now.to_s(:db)
           end
-          api.synchronized account['id'], shop['id']
         end
       end
 

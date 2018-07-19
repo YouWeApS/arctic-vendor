@@ -1,40 +1,36 @@
 require "spec_helper"
 
 RSpec.describe Arctic::Vendor do
-  before { ENV['ARCTIC_CORE_API_TOKEN'] = 'hello' }
-
-  let(:account1) do
-    {
-      id: 'abcdef123',
-    }.as_json
+  before do
+    ENV['ARCTIC_CORE_API_TOKEN'] = 'hello'
+    ENV['VENDOR_ID'] = 'Bob'
   end
 
   let(:shop1) do
     {
       id: 'ghijkl456',
-      type: 'source',
+      type: 'collection',
     }.as_json
   end
 
   let(:shop2) do
     {
       id: 'mnopqr789',
-      type: 'target',
+      type: 'dispersal',
     }.as_json
   end
 
   let(:prod1) do
     {
-      id: 'product-1',
-      characteristics: {
-        color: 'black',
-      },
+      sku: 'product-1',
+      color: 'black',
     }.as_json
   end
 
   before do
-    allow(described_class.api).to receive(:list_accounts).exactly(2).times.and_return [account1]
-    allow(described_class.api).to receive(:list_shops).exactly(2).times.and_return [shop1, shop2]
+    allow(described_class.api).to receive(:list_shops).at_least(:once).and_return \
+      dispersal: [shop2],
+      collection: [shop1]
   end
 
   describe 'MAX_THREADS' do
@@ -59,7 +55,7 @@ RSpec.describe Arctic::Vendor do
       end
 
       expect(Arctic.logger).to receive(:fatal).exactly(:once).with(shop2)
-      described_class.each_shop(type: :target) do |shop|
+      described_class.each_shop(:dispersal) do |shop|
         Arctic.logger.fatal shop
       end
     end
@@ -82,8 +78,8 @@ RSpec.describe Arctic::Vendor do
 
   describe '.collect_products' do
     it 'yields the shop to the caller' do
-      expect(described_class.api).to receive(:send_products).with(account1['id'], shop1['id'], [prod1]).and_return []
-      expect(described_class.api).to receive(:synchronized).with(account1['id'], shop1['id'])
+      expect(described_class.api).to receive(:send_products).with(shop1['id'], [prod1]).and_return [prod1]
+      expect(described_class.api).to receive(:update_product).with(shop1['id'], prod1.fetch('sku'), { dispersed_at: Time.now.to_s(:db) })
       described_class.collect_products do |shop|
         [prod1]
       end
@@ -92,8 +88,8 @@ RSpec.describe Arctic::Vendor do
 
   describe '.distribute_products' do
     it 'yields the shop to the caller' do
-      expect(described_class.api).to receive(:list_products).with(account1['id'], shop2['id'], { batch_size: 100 }).and_yield [prod1]
-      expect(described_class.api).to receive(:synchronized).with(account1['id'], shop2['id'])
+      expect(described_class.api).to receive(:list_products).with(shop2['id'], { batch_size: 100 }).and_yield [prod1]
+      expect(described_class.api).to receive(:update_product).with(shop2['id'], prod1.fetch('sku'), { dispersed_at: Time.now.to_s(:db) })
       expect(Arctic.logger).to receive(:fatal).with(shop2)
       expect(Arctic.logger).to receive(:fatal).with([prod1])
       described_class.distribute_products do |shop, products|
@@ -104,8 +100,8 @@ RSpec.describe Arctic::Vendor do
 
     context 'setting batch size' do
       it 'yields the shop to the caller' do
-        expect(described_class.api).to receive(:list_products).with(account1['id'], shop2['id'], { batch_size: 10_000 }).and_yield [prod1]
-        expect(described_class.api).to receive(:synchronized).with(account1['id'], shop2['id'])
+        expect(described_class.api).to receive(:list_products).with(shop2['id'], { batch_size: 10_000 }).and_yield [prod1]
+        expect(described_class.api).to receive(:update_product).with(shop2['id'], prod1.fetch('sku'), { dispersed_at: Time.now.to_s(:db) })
         expect(Arctic.logger).to receive(:fatal).with(shop2)
         expect(Arctic.logger).to receive(:fatal).with([prod1])
         described_class.distribute_products(batch_size: 10_000) do |shop, products|

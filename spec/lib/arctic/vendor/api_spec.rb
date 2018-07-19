@@ -4,7 +4,10 @@ RSpec.describe Arctic::Vendor::API do
   let(:instance) { described_class.new }
   subject { instance }
 
-  before { ENV['ARCTIC_CORE_API_TOKEN'] = 'Hello' }
+  before do
+    ENV['ARCTIC_CORE_API_TOKEN'] = 'Hello'
+    ENV['VENDOR_ID'] = 'Bob'
+  end
 
   describe '#connection' do
     subject { instance.connection }

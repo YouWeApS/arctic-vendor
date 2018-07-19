@@ -7,21 +7,26 @@ require_relative 'product'
 module Arctic
   module Vendor
     class API
-      attr_reader :token, :connection
+      attr_reader :vendor_id, :token, :connection
 
       def initialize(**options)
-        api_token = options.fetch(:token, ENV.fetch('ARCTIC_CORE_API_TOKEN'))
+        @vendor_id = options.fetch(:vendor_id, ENV.fetch('VENDOR_ID'))
+
+        @token = options.fetch(:token, ENV.fetch('ARCTIC_CORE_API_TOKEN'))
+
         api_url = options.fetch(:url,
           ENV.fetch('ARCTIC_CORE_API_URL',
             'http://localhost:5000/v1/vendors'))
 
-        @token = api_token
         headers = {
-          Authorization: "Vendor #{token}",
           'Content-Type': 'application/json',
           Accept: 'application/json',
         }
-        @connection = Faraday.new url: api_url.chomp('/'), headers: headers
+
+        @connection = Faraday.new url: api_url.chomp('/'), headers: headers do |conn|
+          conn.basic_auth(vendor_id, token)
+          conn.adapter Faraday.default_adapter
+        end
       end
 
       # List shops for a single account
@@ -47,6 +52,12 @@ module Arctic
       # Marks the shop as synchronized by the vendor
       def update_product(shop_id, sku, **params)
         make_request :patch, "shops/#{shop_id}/products/#{sku}", params: params
+      end
+
+      def update_products(shop_id, products, **params)
+        Arctic::Vendor.threaded(products) do |prod|
+          update_product shop_id, prod.fetch('sku'), **params
+        end
       end
 
       private
