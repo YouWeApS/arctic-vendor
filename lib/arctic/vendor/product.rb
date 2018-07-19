@@ -16,23 +16,21 @@ module Arctic
         :sku,
         :characteristics,
         :api,
-        :account_id,
         :shop_id
 
-      def initialize(account_id, shop_id, product_hash, api_instance)
+      def initialize(shop_id, product_hash, api_instance)
         @product_hash = product_hash
 
         @api = api_instance
 
         @shop_id = shop_id
-        @account_id = account_id
 
         @sku = product_hash.fetch 'sku'
         @characteristics = Characteristics.new product_hash.fetch 'characteristics'
       end
 
-      def update_state(state)
-        api.update_product_state account_id, shop_id, sku, state
+      def update(**params)
+        api.update_product shop_id, sku, **params
       end
 
       def method_missing(name, *args)

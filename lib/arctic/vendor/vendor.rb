@@ -53,15 +53,48 @@ module Arctic
     end
     module_function :collect_products
 
+    # Collect orders from target shops
+    def collect_orders(&block)
+      each_shop(type: :target) do |shop|
+        orders = yield shop
+        api.collect_orders shop['account_id'], shop['id'], orders
+      end
+    end
+    module_function :collect_orders
+
+    # Collect orders to source shops
+    def distribute_orders(**params)
+      params.reverse_merge! \
+        batch_size: 100
+
+      orders_count = 0
+
+      seconds = time do
+        each_shop do |shop, account|
+          api.list_orders(account['id'], shop['id'], **params) do |orders|
+            orders_count += orders.size
+            yield shop, orders
+          end
+          api.synchronized account['id'], shop['id']
+        end
+      end
+
+      Arctic.logger.info "Distributed #{orders_count} orders in #{seconds} seconds"
+    end
+    module_function :collect_orders
+
     # Fetches all products from the Core API and distributes them to the
     # target vendors
-    def distribute_products(batch_size: 100)
+    def distribute_products(**params)
       Arctic.logger.info "Distributing products to target vendor..."
       products_count = 0
 
+      params.reverse_merge! \
+        batch_size: 100
+
       seconds = time do
         each_shop(type: :target) do |shop, account|
-          api.list_products(account['id'], shop['id'], per_page: batch_size) do |products|
+          api.list_products(account['id'], shop['id'], params) do |products|
             products_count += products.size
             yield shop, products
           end

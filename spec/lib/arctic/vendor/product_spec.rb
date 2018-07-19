@@ -1,9 +1,8 @@
 require "spec_helper"
 
 RSpec.describe Arctic::Vendor::Product do
-  let(:instance) { described_class.new account_id, shop_id, data, api }
+  let(:instance) { described_class.new shop_id, data, api }
 
-  let(:account_id) { 'account1' }
   let(:shop_id) { 'shop1' }
   let(:api) { double }
 

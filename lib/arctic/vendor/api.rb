@@ -24,62 +24,32 @@ module Arctic
         @connection = Faraday.new url: api_url.chomp('/'), headers: headers
       end
 
-      # List the current accounts available to the vendor
-      def list_accounts
-        make_request :get, 'accounts'
-      end
-
-      # Show details about a single account
-      def show_account(account_id)
-        make_request :get, "accounts/#{account_id}"
-      end
-
       # List shops for a single account
-      def list_shops(account_id)
-        make_request :get, "accounts/#{account_id}/shops"
+      def list_shops
+        make_request :get, "shops"
       end
 
       # Send products to the Core API
-      def send_products(account_id, shop_id, products)
-        products.tap do |px|
-          make_batch_request :post, "accounts/#{account_id}/shops/#{shop_id}/products", body: px
-        end
-      end
-
-      def collect_orders(account_id, shop_id, orders)
-        orders.tap do |ox|
-          make_batch_request :post, "accounts/#{account_id}/shops/#{shop_id}/orders", body: ox
+      def send_products(shop_id, products)
+        Arctic::Vendor.threaded(products) do |prod|
+          make_request :post, "shops/#{shop_id}/products", params: prod
         end
       end
 
       # Retrieve products from the Core API
-      def list_products(account_id, shop_id, **params)
-        make_paginated_request(:get, "accounts/#{account_id}/shops/#{shop_id}/products", params: params) do |products|
-          yield products.collect { |prod| Arctic::Vendor::Product.new account_id, shop_id, prod, self }
+      def list_products(shop_id, **params)
+        params[:per_page] = params.delete(:batch_size) || 100
+        make_paginated_request(:get, "shops/#{shop_id}/products", params: params) do |products|
+          yield products.collect { |prod| Arctic::Vendor::Product.new shop_id, prod, self }
         end
       end
 
-      def get_product(account_id, shop_id, product_id)
-        product_id = URI.escape product_id
-        make_request :get, "accounts/#{account_id}/shops/#{shop_id}/products/#{product_id}"
-      end
-
       # Marks the shop as synchronized by the vendor
-      def synchronized(account_id, shop_id)
-        make_request :put, "accounts/#{account_id}/shops/#{shop_id}/synchronized"
-      end
-
-      # Marks the shop as synchronized by the vendor
-      def update_product_state(account_id, shop_id, product_id, state)
-        make_request :put, "accounts/#{account_id}/shops/#{shop_id}/products/#{product_id}/state/#{state}"
+      def update_product(shop_id, sku, **params)
+        make_request :patch, "shops/#{shop_id}/products/#{sku}", params: params
       end
 
       private
-
-        def make_batch_request(*args, **options)
-          batches = Array(options.delete(:body)).flatten.in_groups_of(1000, false)
-          Arctic::Vendor.threaded(batches) { |batch| make_request *args, **(options.merge(body: batch)) }
-        end
 
         def raw_request(method, path, body: {}, params: {})
           # Remove preceeding slash to avoid going from base url /v1 to /

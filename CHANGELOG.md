@@ -1,7 +1,14 @@
 # Changelog
 
+### 1.0.0
+
+* Remove a number of superfluous endpoints
+* Remove need for account_id
+* Rename some existing endpoints
+
 ### 0.2.5
 
+* Add latest_only key to distribute_products
 * Added api method for adding orders to the Core API
 
 ### 0.2.1
