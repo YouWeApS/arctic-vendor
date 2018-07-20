@@ -5,6 +5,7 @@
 * Remove a number of superfluous endpoints
 * Remove need for account_id
 * Rename some existing endpoints
+* Remove Product objetc. Use POR hashes
 
 ### 0.2.5
 

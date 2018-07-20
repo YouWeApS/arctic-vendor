@@ -2,8 +2,6 @@ require 'faraday'
 require 'json'
 require 'active_support/all'
 
-require_relative 'product'
-
 module Arctic
   module Vendor
     class API
@@ -62,12 +60,13 @@ module Arctic
       def list_products(shop_id, **params)
         params[:per_page] = params.delete(:batch_size) || 100
         make_paginated_request(:get, "shops/#{shop_id}/products", params: params) do |products|
-          yield products.collect { |prod| Arctic::Vendor::Product.new shop_id, prod, self }
+          yield products
         end
       end
 
       # Marks the shop as synchronized by the vendor
       def update_product(shop_id, sku, **params)
+        Arctic.logger.debug "Updating Product(#{sku}).."
         make_request :patch, "shops/#{shop_id}/products/#{sku}", params: params
       end
 

@@ -55,15 +55,13 @@ RSpec.describe Arctic::Vendor::API do
       [
         {
           sku: 'product1',
-          characteristics: { color: :black },
-          master: true,
-          state: nil,
+          master_sku: nil,
+          color: :black,
         },
         {
           sku: 'product2',
-          characteristics: {},
-          master: true,
-          state: nil,
+          master_sku: 'product1',
+          color: :black,
         },
       ].as_json
     end
@@ -77,9 +75,9 @@ RSpec.describe Arctic::Vendor::API do
 
       instance.list_products('shop1') do |products|
         product = products.first
-        expect(product).to be_a Arctic::Vendor::Product
-        expect(product.sku).to eql('product1')
-        expect(product.characteristics.color).to eql('black')
+        expect(product).to be_a Hash
+        expect(product.fetch('sku')).to eql('product1')
+        expect(product.fetch('color')).to eql('black')
       end
     end
   end

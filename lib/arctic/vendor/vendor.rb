@@ -80,7 +80,7 @@ module Arctic
           api.list_products(shop['id'], params) do |products|
             products_count += products.size
             yield shop, products
-            api.update_products shop['id'], products, dispersed_at: Time.now.to_s(:db)
+            # api.update_products shop['id'], products, dispersed_at: Time.now.to_s(:db)
           end
         end
       end

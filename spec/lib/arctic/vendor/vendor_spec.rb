@@ -79,7 +79,6 @@ RSpec.describe Arctic::Vendor do
   describe '.collect_products' do
     it 'yields the shop to the caller' do
       expect(described_class.api).to receive(:send_products).with(shop1['id'], [prod1]).and_return [prod1]
-      expect(described_class.api).to receive(:update_product).with(shop1['id'], prod1.fetch('sku'), { dispersed_at: Time.now.to_s(:db) })
       described_class.collect_products do |shop|
         [prod1]
       end
