@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.1
+
+* Add ruby version dependency
+
 ### 1.0.0
 
 * Remove a number of superfluous endpoints
