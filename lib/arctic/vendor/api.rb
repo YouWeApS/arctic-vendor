@@ -41,6 +41,7 @@ module Arctic
             Arctic.logger.error "Failed to send product (#{e.class}): #{e.message} -- #{prod}"
           end
         end
+        make_request :put, "shops/#{shop_id}", params: { collected_at: Time.now.to_s(:db) }
         products
       end
 

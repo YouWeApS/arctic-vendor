@@ -40,11 +40,15 @@ RSpec.describe Arctic::Vendor::API do
       end.as_json
     end
 
-    it 'calls the right API endpoint' do
+    it 'calls the right API endpoints' do
       response = double body: '', status: 200
       expect(instance.connection).to receive(:post)
         .with("shops/shop1/products")
         .exactly(5).times
+        .and_return response
+      expect(instance.connection).to receive(:put)
+        .with("shops/shop1")
+        .exactly(:once)
         .and_return response
       instance.send_products('shop1', products)
     end

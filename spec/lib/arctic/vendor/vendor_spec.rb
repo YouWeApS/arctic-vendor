@@ -88,7 +88,6 @@ RSpec.describe Arctic::Vendor do
   describe '.distribute_products' do
     it 'yields the shop to the caller' do
       expect(described_class.api).to receive(:list_products).with(shop2['id'], { batch_size: 100 }).and_yield [prod1]
-      expect(described_class.api).to receive(:update_product).with(shop2['id'], prod1.fetch('sku'), { dispersed_at: Time.now.to_s(:db) })
       expect(Arctic.logger).to receive(:fatal).with(shop2)
       expect(Arctic.logger).to receive(:fatal).with([prod1])
       described_class.distribute_products do |shop, products|
@@ -100,7 +99,6 @@ RSpec.describe Arctic::Vendor do
     context 'setting batch size' do
       it 'yields the shop to the caller' do
         expect(described_class.api).to receive(:list_products).with(shop2['id'], { batch_size: 10_000 }).and_yield [prod1]
-        expect(described_class.api).to receive(:update_product).with(shop2['id'], prod1.fetch('sku'), { dispersed_at: Time.now.to_s(:db) })
         expect(Arctic.logger).to receive(:fatal).with(shop2)
         expect(Arctic.logger).to receive(:fatal).with([prod1])
         described_class.distribute_products(batch_size: 10_000) do |shop, products|

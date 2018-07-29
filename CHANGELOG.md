@@ -6,6 +6,7 @@
 * Remove need for account_id
 * Rename some existing endpoints
 * Remove Product objetc. Use POR hashes
+* Add call to update when the shop was last collected after each collection cycle
 
 ### 0.2.5
 
