@@ -36,65 +36,20 @@ marketplace.
 > To install in your project
 
 ```ruby
-gem 'arctic-vendor', '~> 2.2'
+gem 'arctic-vendor', '~> 1.0'
 ```
 
 First you must [register your Vendor](https://arctic-project.dk/vendor/register)
-with the Core API to obtain a Vendor Token.
+with the Core API to obtain a Vendor Token and ID.
 
-In order to connect to the Arctici Core API, you need to have a Vendor Token,
-and you need to store this token in the `ARCTIC_CORE_API_TOKEN` environment
-variable.
+Then store the token and ID in your environment as `ARCTIC_CORE_API_TOKEN` and `VENDOR_ID`.
 
 If you need to run your application against another environment you can override
 the URL by setting the `ARCTIC_CORE_API_URL` environment variable.
 
 # Object descriptions
 
-### Shop
-
-A single object.
-
-Parameter | Description
---------- | -----------
-id | Shop ID
-name | Human friendly shop name
-synced_at | [ISO 8601 HTTP date](https://en.wikipedia.org/wiki/ISO_8601)
-auth_config | Sensitive marketplace authentication information
-config | Non-sensitive, general configuration set for the shop
-format_config | JSON formatting instructions
-
-<aside class="notice">
-All <code>*config</code> fields are filled or enhanced by the merchant when
-configuring the Vendor to distribute products through the Vendor's marketplace.
-When registering the vendor with the Core API, JSON schema definitions for these
-fields must be supplied by the Vendor developer.
-</aside>
-
-### Products
-
-An array of product objects.
-
-Parameter | Description
---------- | -----------
-id | Product ID
-characteristics | Normalized product characteristics
-master | Product is master. Will have a Product ID value if this product is a variant of another.
-state | Last known product state. Can be <code>created</code>, <code>updated</code>, or <code>deleted</code>
-
-### Product characteristics
-
-Name | Description
----- | -----------
-name | Human readable product name
-description | Human readable description of the product
-color | Color
-size | Size
-ean | EAN number
-price | Price without currency
-currency | [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code
-stock | Stock count
-images | Array of image URLs
+You can see the objects returned by the API to this library in the [Core API documentation](https://arctic-vendor.io).
 
 # Collecting products
 
@@ -124,6 +79,7 @@ formatted according to the `shop`s `format_config` block.
 ```ruby
 Arctic::Vendor.distribute_products(batch_size: 300) do |shop, product_batch|
   # 1. Connect to the marketplace and publish the products to the shop
+
   product_batch.each do |product|
     # 2. As each of the products are published, update the state
     product.update_state 'created'

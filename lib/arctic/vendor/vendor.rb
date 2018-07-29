@@ -21,22 +21,6 @@ module Arctic
     end
     module_function :each_shop
 
-    def collect_currencies(&block)
-      Arctic.logger.info "Collecting currencies from collection shop"
-
-      currencies_count = 0
-
-      seconds = time do
-        each_shop(:collection) do |shop|
-          currencies = api.send_currencies shop['id'], yield(shop)
-          currencies_count += currencies.size
-        end
-      end
-
-      Arctic.logger.info "Collected #{currencies_count} exchange rates in #{seconds} seconds."
-    end
-    module_function :collect_currencies
-
     def api(*args)
       @api ||= Arctic::Vendor::API.new(*args)
     end
