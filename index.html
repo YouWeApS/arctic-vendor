@@ -406,6 +406,7 @@ fields must be supplied by the Vendor developer.
 </blockquote>
 <pre class="highlight ruby tab-ruby"><code><span class="no">Arctic</span><span class="o">::</span><span class="no">Vendor</span><span class="p">.</span><span class="nf">collect_products</span> <span class="k">do</span> <span class="o">|</span><span class="n">shop</span><span class="o">|</span>
   <span class="c1"># 1. Connect to the marketplace and retrieve the products for the shop</span>
+
   <span class="c1"># 2. Format each of the products according to the shop's format_config</span>
 <span class="k">end</span>
 </code></pre>
@@ -421,14 +422,22 @@ formatted according to the <code>shop</code>s <code>format_config</code> block.<
 <blockquote>
 <p>Distribute products to the marketplace</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="no">Arctic</span><span class="o">::</span><span class="no">Vendor</span><span class="p">.</span><span class="nf">distribute_products</span> <span class="k">do</span> <span class="o">|</span><span class="n">shop</span><span class="p">,</span> <span class="n">products</span><span class="o">|</span>
-  <span class="c1"># Connect to the marketplace and publish the products to the shop</span>
+<pre class="highlight ruby tab-ruby"><code><span class="no">Arctic</span><span class="o">::</span><span class="no">Vendor</span><span class="p">.</span><span class="nf">distribute_products</span><span class="p">(</span><span class="ss">batch_size: </span><span class="mi">300</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">shop</span><span class="p">,</span> <span class="n">product_batch</span><span class="o">|</span>
+  <span class="c1"># 1. Connect to the marketplace and publish the products to the shop</span>
+  <span class="n">product_batch</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="o">|</span>
+    <span class="c1"># 2. As each of the products are published, update the state</span>
+    <span class="n">product</span><span class="p">.</span><span class="nf">update_state</span> <span class="s1">'created'</span>
+  <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
 <p>First, initialize the <code>Vendor.distribute_products</code> method to receive each of the
-shops and related products to distribute to the marketplace.</p>
+shops and batches of related products to distribute to the marketplace.</p>
 
 <p>Then connect to the marketplace and distribute the products to the shop.</p>
+
+<aside class="notice">
+<code>Arctic::Vendor.distribute_products</code> returns products in batches of 100 by default.
+</aside>
 <h1 id='going-live'>Going live</h1>
 <p>When you have fully developed your Vendor, you will have to go through a
 verification and testing process with the Arctic Team.</p>
