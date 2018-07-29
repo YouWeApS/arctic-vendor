@@ -72,8 +72,12 @@ RSpec.describe Arctic::Vendor::API do
 
     it 'calls the right API endpoint' do
       response = double body: products.to_json, status: 200, headers: {}
+
+      expect(instance.connection).to receive(:head)
+        .with("shops/shop1/products")
+        .and_return response
+
       expect(instance.connection).to receive(:get)
-        .at_least(:once)
         .with("shops/shop1/products")
         .and_return response
 
