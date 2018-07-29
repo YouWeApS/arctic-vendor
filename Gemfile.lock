@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (1.0.0)
+    arctic-vendor (1.0.1)
       activesupport (~> 5.2)
       faraday (~> 0.14)
 
