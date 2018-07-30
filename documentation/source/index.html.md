@@ -49,7 +49,7 @@ the URL by setting the `ARCTIC_CORE_API_URL` environment variable.
 
 # Object descriptions
 
-You can see the objects returned by the API to this library in the [Core API documentation](https://arctic-vendor.io).
+You can see the objects returned by the API to this library in the [Core API documentation](https://arctic-project.io).
 
 # Collecting products
 
