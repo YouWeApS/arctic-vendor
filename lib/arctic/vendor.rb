@@ -1,22 +1,5 @@
-require "arctic/vendor/version"
-require 'arctic/vendor/api'
-require 'arctic/vendor/vendor'
-require 'arctic/vendor/uri'
+require_relative 'vendor/dispersal_api'
+require_relative 'logger'
 
 module Arctic
-  def logger
-    @logger ||= begin
-      STDOUT.sync = true
-      Logger.new STDOUT
-    end
-  end
-  module_function :logger
-
-  def logger=(new_logger)
-    @logger = new_logger
-  end
-  module_function :logger=
-
-  module Vendor
-  end
 end

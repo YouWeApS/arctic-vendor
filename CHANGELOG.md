@@ -1,5 +1,13 @@
 # Changelog
 
+### 2.0.0
+
+* Major rewrite of the dispersal api. This is now namespaced to Dispersal.
+
+### 1.1.0
+
+* Allow reporting individual product errors
+
 ### 1.0.1
 
 * Add ruby version dependency

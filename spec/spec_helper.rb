@@ -1,6 +1,8 @@
 require "bundler/setup"
 require "arctic/vendor"
 require 'webmock/rspec'
+require 'rspec/its'
+require 'timecop'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
