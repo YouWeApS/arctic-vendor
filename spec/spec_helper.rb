@@ -3,6 +3,7 @@ require "arctic/vendor"
 require 'webmock/rspec'
 require 'rspec/its'
 require 'timecop'
+require 'active_support/all'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

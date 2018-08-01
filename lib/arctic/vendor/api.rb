@@ -1,5 +1,7 @@
+require 'active_support/all'
 require "faraday"
 require 'typhoeus/adapters/faraday'
+require 'faraday_middleware'
 
 module Arctic
   module Vendor
@@ -30,15 +32,16 @@ module Arctic
 
         @connection = Faraday.new options do |conn|
           conn.basic_auth(vendor_id, vendor_token)
+          conn.response :json
           conn.adapter :typhoeus
         end
       end
 
-      def list_shops(&block)
+      def list_shops(type = :dispersal, &block)
         all_shops = []
 
         paginated_request(:get, 'shops') do |response|
-          shops = response.body
+          shops = response.body[type.to_s]
           shops.each { |s| yield s } if block_given?
           all_shops.concat shops
         end

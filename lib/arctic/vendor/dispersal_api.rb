@@ -1,5 +1,3 @@
-require 'active_support/time'
-
 require_relative 'api'
 
 module Arctic

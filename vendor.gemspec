@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "faraday", "~> 0.14"
   spec.add_runtime_dependency "activesupport", "~> 5.2"
   spec.add_runtime_dependency "typhoeus", "~> 1.3"
+  spec.add_runtime_dependency "faraday_middleware", "~> 0.12"
 end

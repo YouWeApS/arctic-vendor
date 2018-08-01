@@ -54,14 +54,17 @@ RSpec.describe Arctic::Vendor::API do
   end
 
   describe '#list_shops' do
-    let(:shop1) { { id: 'shop1' } }
+    let(:shop1) { { id: 'shop1' }.as_json }
 
-    let(:shop2) { { id: 'shop2' } }
+    let(:shop2) { { id: 'shop2' }.as_json }
 
     let(:response) do
       {
         status: 200,
-        body: [shop1, shop2],
+        body: {
+          collection: [shop1],
+          dispersal: [shop2],
+        }.to_json
       }
     end
 
@@ -72,14 +75,29 @@ RSpec.describe Arctic::Vendor::API do
 
     context 'without block' do
       it 'yields each of the shops' do
-        expect(instance.list_shops).to match_array [shop1, shop2]
+        expect(instance.list_shops).to match_array [shop2]
       end
     end
 
     context 'with block' do
       it 'yields each of the shops' do
         expect { |b| instance.list_shops(&b) }.to \
-          yield_successive_args(shop1, shop2)
+          yield_successive_args(shop2)
+      end
+    end
+
+    describe 'collection type' do
+      context 'without block' do
+        it 'yields each of the shops' do
+          expect(instance.list_shops(:collection)).to match_array [shop1]
+        end
+      end
+
+      context 'with block' do
+        it 'yields each of the shops' do
+          expect { |b| instance.list_shops(:collection, &b) }.to \
+            yield_successive_args(shop1)
+        end
       end
     end
   end
