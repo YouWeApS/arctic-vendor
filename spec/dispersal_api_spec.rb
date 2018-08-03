@@ -114,7 +114,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
   describe '#report_error' do
     it 'calls the right endpoint' do
-      request_options[:body] = 'details=Error%20details&message=Some%20error'
+      request_options[:body] = 'details=Error%20details&message=Some%20error&raw_data%5Bsome%5D=data'
 
       stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/products/prod1/errors")
         .with(**request_options)
@@ -122,6 +122,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       instance.report_error(shop_id, 'prod1', {
         message: 'Some error',
         details: 'Error details',
+        raw_data: { some: :data },
       })
     end
   end
