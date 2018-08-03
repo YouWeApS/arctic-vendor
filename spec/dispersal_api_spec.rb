@@ -126,4 +126,18 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       })
     end
   end
+
+  describe '#collect_orders' do
+    it 'calls the right endpoint' do
+      request_options[:body] = 'id=AZ1&status=processing'
+
+      stub_request(:put, "http://localhost:5000/v1/vendors/shops/1/orders/AZ1")
+        .with(**request_options)
+
+      instance.collect_order(shop_id, {
+        id: 'AZ1',
+        status: :processing,
+      })
+    end
+  end
 end

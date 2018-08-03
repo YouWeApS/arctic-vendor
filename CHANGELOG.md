@@ -3,6 +3,7 @@
 ### 2.0.0
 
 * Major rewrite of the dispersal api. This is now namespaced to Dispersal.
+* Add order collection endpoint for dispersal vendors
 
 ### 1.1.0
 

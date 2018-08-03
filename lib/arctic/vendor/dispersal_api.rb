@@ -37,6 +37,14 @@ module Arctic
         def report_error(shop_id, sku, error)
           request :post, "shops/#{shop_id}/products/#{sku}/errors", body: error
         end
+
+        # Dispersal vendors collect orders for the collection vendor. So orders
+        # generally flow in the opposite direction of products.
+        # If the order
+        def collect_order(shop_id, order)
+          id = order.with_indifferent_access.fetch :id
+          request :put, "shops/#{shop_id}/orders/#{id}", body: order
+        end
       end
     end
   end
