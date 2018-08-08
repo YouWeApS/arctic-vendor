@@ -22,12 +22,15 @@ module Arctic
           products
         end
 
-        # Mark a product as having been distributed.
-        # This will exclude it from redistribution by the vendor until the
-        # product has changed in some way.
-        def mark_as_distributed(shop_id, sku)
+        # Mark a product's state
+        #
+        # States:
+        #  * distributed: This will exclude it from redistribution by the vendor until the
+        #    product has changed in some way.
+        #  * inprogress: The product is currently being distributed
+        def update_product_state(shop_id, sku, state)
           request :patch, "shops/#{shop_id}/products/#{sku}", body: {
-            dispersed_at: Time.now.to_s(:db),
+            state: state,
           }
         end
 
@@ -44,13 +47,6 @@ module Arctic
         def collect_order(shop_id, order)
           id = order.with_indifferent_access.fetch :id
           request :put, "shops/#{shop_id}/orders/#{id}", body: order
-        end
-
-        # Update the state of the product in this vendor
-        def update_product_state(shop_id, sku, state)
-          request :patch, "shops/#{shop_id}/products/#{sku}/queues", body: {
-            state: state,
-          }
         end
       end
     end
