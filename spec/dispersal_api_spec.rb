@@ -102,7 +102,9 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
   describe '#mark_as_distributed' do
     it 'calls the right endpoint' do
       Timecop.freeze '2018-08-01 11:20:51' do
-        request_options[:body] = "dispersed_at=2018-08-01%2011%3A20%3A51"
+        request_options[:body] = {
+          dispersed_at: '2018-08-01 11:20:51',
+        }.to_json
 
         stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products/prod1")
           .with(**request_options)
@@ -114,7 +116,13 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
   describe '#report_error' do
     it 'calls the right endpoint' do
-      request_options[:body] = 'details=Error%20details&message=Some%20error&raw_data%5Bsome%5D=data'
+      request_options[:body] = {
+        message: 'Some error',
+        details: 'Error details',
+        raw_data: {
+          some: :data,
+        },
+      }.to_json
 
       stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/products/prod1/errors")
         .with(**request_options)
@@ -129,7 +137,10 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
   describe '#collect_orders' do
     it 'calls the right endpoint' do
-      request_options[:body] = 'id=AZ1&status=processing'
+      request_options[:body] = {
+        id: 'AZ1',
+        status: :processing,
+      }.to_json
 
       stub_request(:put, "http://localhost:5000/v1/vendors/shops/1/orders/AZ1")
         .with(**request_options)
@@ -138,6 +149,17 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
         id: 'AZ1',
         status: :processing,
       })
+    end
+  end
+
+  describe '#update_product_state' do
+    it 'calls the right endpoint' do
+      request_options[:body] = { state: 'inprogress' }.to_json
+
+      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products/AZ1/queues")
+        .with(**request_options)
+
+      instance.update_product_state(shop_id, 'AZ1', 'inprogress')
     end
   end
 end

@@ -4,6 +4,8 @@
 
 * Major rewrite of the dispersal api. This is now namespaced to Dispersal.
 * Add order collection endpoint for dispersal vendors
+* Add endpoint to report product queue state
+* Ensure that API sends body in JSON format
 
 ### 1.1.0
 

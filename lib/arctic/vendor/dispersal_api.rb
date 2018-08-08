@@ -45,6 +45,13 @@ module Arctic
           id = order.with_indifferent_access.fetch :id
           request :put, "shops/#{shop_id}/orders/#{id}", body: order
         end
+
+        # Update the state of the product in this vendor
+        def update_product_state(shop_id, sku, state)
+          request :patch, "shops/#{shop_id}/products/#{sku}/queues", body: {
+            state: state,
+          }
+        end
       end
     end
   end
