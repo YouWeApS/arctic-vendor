@@ -6,6 +6,7 @@
 * Add order collection endpoint for dispersal vendors
 * Add endpoint to report product queue state
 * Ensure that API sends body in JSON format
+* Allow dispersal vendor to report dispersal process completed
 
 ### 1.1.0
 

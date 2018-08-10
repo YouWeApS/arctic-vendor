@@ -48,6 +48,12 @@ module Arctic
           id = order.with_indifferent_access.fetch :id
           request :put, "shops/#{shop_id}/orders/#{id}", body: order
         end
+
+        # Notifies the Core API that the vendor has completed its dispersal
+        # process.
+        def completed_dispersal(shop_id)
+          request :patch, "shops/#{shop_id}"
+        end
       end
     end
   end

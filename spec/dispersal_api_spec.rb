@@ -147,4 +147,13 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       instance.update_product_state(shop_id, 'AZ1', 'inprogress')
     end
   end
+
+  describe '#completed_dispersal' do
+    it 'calls the right endpoint' do
+      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1")
+        .with(**request_options)
+
+      instance.completed_dispersal(shop_id)
+    end
+  end
 end
