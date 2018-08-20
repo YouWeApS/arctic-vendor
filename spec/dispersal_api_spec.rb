@@ -127,7 +127,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
         status: :processing,
       }.to_json
 
-      stub_request(:put, "http://localhost:5000/v1/vendors/shops/1/orders/AZ1")
+      stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders")
         .with(**request_options)
 
       instance.collect_order(shop_id, {

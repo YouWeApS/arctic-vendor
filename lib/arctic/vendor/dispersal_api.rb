@@ -46,7 +46,7 @@ module Arctic
         # If the order
         def collect_order(shop_id, order)
           id = order.with_indifferent_access.fetch :id
-          request :put, "shops/#{shop_id}/orders/#{id}", body: order
+          request :post, "shops/#{shop_id}/orders", body: order
         end
 
         # Notifies the Core API that the vendor has completed its dispersal

@@ -7,6 +7,7 @@
 * Add endpoint to report product queue state
 * Ensure that API sends body in JSON format
 * Allow dispersal vendor to report dispersal process completed
+* Change order creation endpoint to POST
 
 ### 1.1.0
 
