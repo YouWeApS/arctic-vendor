@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.0.0)
+    arctic-vendor (2.0.1)
       activesupport (~> 5.2)
       faraday (~> 0.14)
       faraday_middleware (~> 0.12)
@@ -10,7 +10,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.0)
+    activesupport (5.2.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -29,7 +29,7 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
     hashdiff (0.3.7)
-    i18n (1.0.1)
+    i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     multipart-post (2.0.0)
