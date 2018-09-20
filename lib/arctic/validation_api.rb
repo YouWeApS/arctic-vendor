@@ -30,6 +30,11 @@ module Arctic
     version 'v1', using: :path
     format :json
 
+    desc "Ping"
+    get do
+      { ping: :pong }
+    end
+
     desc "Validate a single product"
     params do
       requires :product, type: Hash, desc: "Product information"
