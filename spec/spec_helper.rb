@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "arctic/vendor"
+require 'arctic/validation_api'
 require 'webmock/rspec'
 require 'rspec/its'
 require 'timecop'
@@ -17,4 +18,15 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) { Arctic.logger = Logger.new '/dev/null' }
+end
+
+RSpec.shared_context :authenticated do |id: nil, token: nil|
+  id ||= SecureRandom.uuid
+  token ||= SecureRandom.uuid
+
+  before do
+    allow(ENV).to receive(:fetch).with('VENDOR_ID').and_return id
+    allow(ENV).to receive(:fetch).with('VENDOR_TOKEN').and_return token
+    basic_authorize id, token
+  end
 end

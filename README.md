@@ -51,6 +51,31 @@ task :sync do
 end
 ```
 
+### Validation API
+
+Each vendor should implement a validation API, which the Core API can use to
+ensure that a product is valid for the given vendor before sending the product
+to the vendor, and to allow the user to quickly see if his changes to the
+product has made it invalid for this vendor.
+
+Your implementation should have a validation class taking two arguments, a
+`product` json object and an `options` hash.
+
+You should then add this to your code somewhere:
+
+```ruby
+Arctic.validator_class = 'YourValidatorClass'
+```
+
+And then you should ensure that you expose the validation API somewhere
+publically available. This is most easily done using a `config.ru` file with
+the `rackup` command.
+
+```ruby
+# config.ru
+run Arctic::ValidationApi
+```
+
 ## Testing
 
 Run all the tests:

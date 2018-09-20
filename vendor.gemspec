@@ -28,9 +28,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-its", "~> 1.2"
   spec.add_development_dependency "timecop", "~> 0.9"
+  spec.add_development_dependency "rack-test", "~> 1.1"
 
   spec.add_runtime_dependency "faraday", "~> 0.14"
   spec.add_runtime_dependency "activesupport", "~> 5.2"
   spec.add_runtime_dependency "typhoeus", "~> 1.3"
   spec.add_runtime_dependency "faraday_middleware", "~> 0.12"
+  spec.add_runtime_dependency "grape", "~> 1.1"
+  spec.add_runtime_dependency "grape_logging", "~> 1.8"
 end

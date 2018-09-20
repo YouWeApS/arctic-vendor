@@ -3,6 +3,7 @@
 ### 2.0.1
 
 * Change order creation endpoint to POST
+* Add validation API grape class
 
 ### 2.0.0
 
