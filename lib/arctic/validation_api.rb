@@ -14,6 +14,8 @@ module Arctic
   module_function :validator_class=
 
   class ValidationApi < Grape::API
+    format :json
+
     use GrapeLogging::Middleware::RequestLogger,
       logger: Arctic.logger,
       include: [ GrapeLogging::Loggers::Response.new,
@@ -26,9 +28,6 @@ module Arctic
     http_basic do |id, token|
       id == ENV.fetch('VENDOR_ID') && token == ENV.fetch('VENDOR_TOKEN')
     end
-
-    version 'v1', using: :path
-    format :json
 
     desc "Ping"
     get do
