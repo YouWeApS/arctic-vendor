@@ -36,7 +36,7 @@ RSpec.describe Arctic::ValidationApi do
     header 'Content-Type', 'application/json'
   end
 
-  describe 'POST /v1/validate' do
+  describe 'POST /validate' do
     let(:product) do
       {
         name: 'Product 1',
@@ -50,7 +50,7 @@ RSpec.describe Arctic::ValidationApi do
     end
 
     let(:action) do
-      post '/v1/validate', params.to_json
+      post '/validate', params.to_json
     end
 
     context 'no credentials' do
