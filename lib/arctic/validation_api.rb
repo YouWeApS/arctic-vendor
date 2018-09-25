@@ -16,6 +16,12 @@ module Arctic
   class ValidationApi < Grape::API
     format :json
 
+    helpers do
+      def logger
+        Arctic.logger
+      end
+    end
+
     use GrapeLogging::Middleware::RequestLogger,
       logger: Arctic.logger,
       include: [ GrapeLogging::Loggers::Response.new,
@@ -26,7 +32,9 @@ module Arctic
     # Use the same credentials for incomming traffic as when connecting to the
     # Core API.
     http_basic do |id, token|
-      id == ENV.fetch('VENDOR_ID') && token == ENV.fetch('VENDOR_TOKEN')
+      (id == ENV.fetch('VENDOR_ID') && token == ENV.fetch('VENDOR_TOKEN')).tap do |result|
+        logger.info "Authenticating #{id}: #{result}"
+      end
     end
 
     desc "Ping"
@@ -40,10 +48,22 @@ module Arctic
       optional :options, type: Hash, desc: "Additional options", default: {}
     end
     post :validate do
-      klass = Arctic.validator_class.to_s.classify.constantize
-      validator = klass.new params[:product], **params[:options]
-      status validator.valid? ? 200 : 400
-      validator.errors
+      sku = params[:product][:sku]
+
+      begin
+        klass = Arctic.validator_class.to_s.classify.constantize
+        validator = klass.new params[:product], **params[:options]
+        status validator.valid? ? 200 : 400
+        logger.info "Validated Product(#{sku}): #{validator.errors.empty?}"
+        logger.info "Validation errors for Product(#{sku}): #{validator.errors}" if validator.errors.any?
+        validator.errors
+      rescue => e
+        logger.error "Validating Product(#{sku}) raised an exception (#{e.class}): #{e.message}"
+        status 400
+        {
+          invalid_request: 'Malformatted request'
+        }
+      end
     end
   end
 end
