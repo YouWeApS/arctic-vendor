@@ -33,7 +33,7 @@ module Arctic
     # Core API.
     http_basic do |id, token|
       (id == ENV.fetch('VENDOR_ID') && token == ENV.fetch('VENDOR_TOKEN')).tap do |result|
-        logger.info "Authenticating #{id}: #{result}"
+        logger.debug "Authenticating #{id}: #{result}"
       end
     end
 
