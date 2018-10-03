@@ -58,6 +58,8 @@ module Arctic
         logger.info "Validation errors for Product(#{sku}): #{validator.errors}" if validator.errors.any?
         validator.errors
       rescue => e
+        logger.debug "Rescueing from #{e.class}: #{e.message}"
+        logger.debug e.backtrace
         logger.error "Validating Product(#{sku}) raised an exception (#{e.class}): #{e.message}"
         status 400
         {
