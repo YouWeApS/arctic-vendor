@@ -51,6 +51,19 @@ task :sync do
 end
 ```
 
+## Logger
+
+To change the logging mechanism simply override the standard STDOUT logging.
+
+```ruby
+require 'arctic/vendor'
+logger = Logger.new 'file.log'
+logger.formatter = Ruby::JSONFormatter::Base.new \
+  ENV.fetch('HOST'),
+  source: :your_application
+Arctic.logger = logger
+```
+
 ### Validation API
 
 Each vendor should implement a validation API, which the Core API can use to

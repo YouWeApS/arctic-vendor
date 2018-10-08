@@ -6,14 +6,12 @@ module Arctic
   def logger
     @logger ||= begin
       STDOUT.sync = true
-      Logger.new STDOUT
+      l = Logger.new STDOUT
+      l.formatter = Ruby::JSONFormatter::Base.new \
+        ENV['HOST'] || 'arctic-vendor-gem',
+        source: :ruby
+      l
     end
-
-    @logger.formatter = Ruby::JSONFormatter::Base.new \
-      ENV['HOST'] || 'arctic-vendor-gem',
-      source: :ruby
-
-    @logger
   end
   module_function :logger
 

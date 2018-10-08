@@ -1,1 +1,1 @@
-{"source":"ruby","a":"b","c":{"d":"e"},"log_level":"INFO","log_type":null,"log_app":"arctic-vendor-gem","log_timestamp":"2018-10-08T14:14:03+02:00"}
+{"source":"your_application","a":"b","c":{"d":"e"},"log_level":"INFO","log_type":null,"log_app":"arctic-vendor-gem","log_timestamp":"2018-10-08T17:14:17+02:00"}
