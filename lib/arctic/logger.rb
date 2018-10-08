@@ -1,3 +1,5 @@
+require 'log_formatter'
+require 'log_formatter/ruby_json_formatter'
 require "logger"
 
 module Arctic
@@ -6,6 +8,12 @@ module Arctic
       STDOUT.sync = true
       Logger.new STDOUT
     end
+
+    @logger.formatter = Ruby::JSONFormatter::Base.new \
+      ENV['HOST'] || 'arctic-vendor-gem',
+      source: :ruby
+
+    @logger
   end
   module_function :logger
 
