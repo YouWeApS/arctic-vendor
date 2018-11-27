@@ -137,6 +137,25 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
     end
   end
 
+  describe '#collect_invoice' do
+    it 'calls the right endpoint' do
+      data = {
+        invoice_id: 'I1',
+        order_lines: [1, 2, 3],
+        amount: 12.34,
+        currency: 'dkk',
+        status: 'awaiting_payment',
+      }
+
+      request_options[:body] = data.to_json
+
+      stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders/2/invoices")
+        .with(**request_options)
+
+      instance.collect_invoice(1, 2, data)
+    end
+  end
+
   describe '#last_synced_at' do
     let(:time) { 1.minute.ago.httpdate }
 

@@ -45,8 +45,14 @@ module Arctic
         # generally flow in the opposite direction of products.
         # If the order
         def collect_order(shop_id, order)
-          id = order.with_indifferent_access.fetch :id
           request :post, "shops/#{shop_id}/orders", body: order
+        end
+
+        # Collected invoice for a specific order
+        # An order can have multiple invoices, so this endpoint can be called
+        # multiple times.
+        def collect_invoice(shop_id, order_id, invoice)
+          request :post, "shops/#{shop_id}/orders/#{order_id}/invoices", body: invoice
         end
 
         # Calls the Core API and queries when this vendor last ran the given
