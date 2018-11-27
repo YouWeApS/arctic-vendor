@@ -7,6 +7,7 @@
 * Add call to get last_synced_at for different sync routines
 * Allow routing in completed_dispersal endpoint
 * Allow collecting invoices for collected orders
+* Allow attaching order lines to orders
 
 ### 2.0.0
 

@@ -55,6 +55,11 @@ module Arctic
           request :post, "shops/#{shop_id}/orders/#{order_id}/invoices", body: invoice
         end
 
+        # Attach collected order lines to orders
+        def collect_order_line(shop_id, order_id, order_line)
+          request :post, "shops/#{shop_id}/orders/#{order_id}/order_lines", body: order_line
+        end
+
         # Calls the Core API and queries when this vendor last ran the given
         # sync routine
         def last_synced_at(shop_id, routine)

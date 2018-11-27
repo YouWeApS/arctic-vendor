@@ -156,6 +156,25 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
     end
   end
 
+  describe '#collect_order_line' do
+    it 'calls the right endpoint' do
+      data = {
+        line_id: 1,
+        status: 'pending',
+        product_id: 'abcdef123',
+        quantity: 3,
+        track_and_trace_reference: '2:1234',
+      }
+
+      request_options[:body] = data.to_json
+
+      stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders/2/order_lines")
+        .with(**request_options)
+
+      instance.collect_order_line(1, 2, data)
+    end
+  end
+
   describe '#last_synced_at' do
     let(:time) { 1.minute.ago.httpdate }
 
