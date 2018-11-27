@@ -4,6 +4,8 @@
 
 * Change order creation endpoint to POST
 * Add validation API grape class
+* Add call to get last_synced_at for different sync routines
+* Allow routing in completed_dispersal endpoint
 
 ### 2.0.0
 

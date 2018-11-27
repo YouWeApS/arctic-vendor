@@ -53,7 +53,7 @@ module Arctic
 
         # Make a single request and return the response object
         def request(method, endpoint, **options)
-          response = connection.public_send method, endpoint do |r|
+          connection.public_send method, endpoint do |r|
             options.fetch(:params, {}).each { |k, v| r.params[k] = v }
             r.body = options[:body].to_json if options[:body]
           end

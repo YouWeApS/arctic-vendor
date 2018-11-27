@@ -137,6 +137,22 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
     end
   end
 
+  describe '#last_synced_at' do
+    let(:time) { 1.minute.ago.httpdate }
+
+    it 'calls the right endpoint for orders routine' do
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders/last_synced_at")
+        .to_return(body: { last_synced_at: time }.to_json)
+      expect(instance.last_synced_at(1, :orders)).to eql time
+    end
+
+    it 'calls the right endpoint for products routine' do
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products/last_synced_at")
+        .to_return(body: { last_synced_at: time }.to_json)
+      expect(instance.last_synced_at(1, :products)).to eql time
+    end
+  end
+
   describe '#update_product_state' do
     it 'calls the right endpoint' do
       request_options[:body] = { state: 'inprogress' }.to_json
@@ -150,10 +166,19 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
   describe '#completed_dispersal' do
     it 'calls the right endpoint' do
-      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1")
+      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products_synced")
         .with(**request_options)
 
       instance.completed_dispersal(shop_id)
+    end
+
+    context 'for orders' do
+      it 'calls the right endpoint' do
+        stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/orders_synced")
+          .with(**request_options)
+
+        instance.completed_dispersal(shop_id, :orders)
+      end
     end
   end
 end

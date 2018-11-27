@@ -49,10 +49,27 @@ module Arctic
           request :post, "shops/#{shop_id}/orders", body: order
         end
 
+        # Calls the Core API and queries when this vendor last ran the given
+        # sync routine
+        def last_synced_at(shop_id, routine)
+          response = request :get, "shops/#{shop_id}/#{routine}/last_synced_at"
+          response.body['last_synced_at']
+        end
+
         # Notifies the Core API that the vendor has completed its dispersal
-        # process.
-        def completed_dispersal(shop_id)
-          request :patch, "shops/#{shop_id}"
+        # process for a specific type.
+        #
+        # Examples:
+        #
+        #   api = Arctic::Vendor::Dispersal::API.new
+        #
+        #   # completing products dispersal
+        #   api.completed_dispersal(1)
+        #
+        #   # completing orders collection
+        #   api.completed_dispersal(1, :orders)
+        def completed_dispersal(shop_id, routine = :products)
+          request :patch, "shops/#{shop_id}/#{routine}_synced"
         end
       end
     end
