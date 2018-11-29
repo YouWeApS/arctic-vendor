@@ -4,6 +4,9 @@ module Arctic
   module Vendor
     module Dispersal
       class API < Arctic::Vendor::API
+        Error = Class.new StandardError
+        InvalidResponse = Class.new Error
+
         # Lists products for dispersal
         def list_products(shop_id, **params, &block)
           url = "shops/#{shop_id}/products"
@@ -45,19 +48,25 @@ module Arctic
         # generally flow in the opposite direction of products.
         # If the order
         def collect_order(shop_id, order)
-          request :post, "shops/#{shop_id}/orders", body: order
+          request(:post, "shops/#{shop_id}/orders", body: order).tap do |response|
+            raise InvalidResponse, response.body unless response.status == 201
+          end
         end
 
         # Collected invoice for a specific order
         # An order can have multiple invoices, so this endpoint can be called
         # multiple times.
         def collect_invoice(shop_id, order_id, invoice)
-          request :post, "shops/#{shop_id}/orders/#{order_id}/invoices", body: invoice
+          request(:post, "shops/#{shop_id}/orders/#{order_id}/invoices", body: invoice).tap do |response|
+            raise InvalidResponse, response.body unless response.status == 201
+          end
         end
 
         # Attach collected order lines to orders
         def collect_order_line(shop_id, order_id, order_line)
-          request :post, "shops/#{shop_id}/orders/#{order_id}/order_lines", body: order_line
+          request(:post, "shops/#{shop_id}/orders/#{order_id}/order_lines", body: order_line).tap do |response|
+            raise InvalidResponse, response.body unless response.status == 201
+          end
         end
 
         # Calls the Core API and queries when this vendor last ran the given
