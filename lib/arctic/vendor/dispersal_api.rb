@@ -4,9 +4,6 @@ module Arctic
   module Vendor
     module Dispersal
       class API < Arctic::Vendor::API
-        Error = Class.new StandardError
-        InvalidResponse = Class.new Error
-
         # Lists products for dispersal
         def list_products(shop_id, **params, &block)
           url = "shops/#{shop_id}/products"
@@ -67,29 +64,6 @@ module Arctic
           request(:post, "shops/#{shop_id}/orders/#{order_id}/order_lines", body: order_line).tap do |response|
             raise InvalidResponse, response.body unless response.status == 201
           end
-        end
-
-        # Calls the Core API and queries when this vendor last ran the given
-        # sync routine
-        def last_synced_at(shop_id, routine)
-          response = request :get, "shops/#{shop_id}/#{routine}/last_synced_at"
-          response.body['last_synced_at']
-        end
-
-        # Notifies the Core API that the vendor has completed its dispersal
-        # process for a specific type.
-        #
-        # Examples:
-        #
-        #   api = Arctic::Vendor::Dispersal::API.new
-        #
-        #   # completing products dispersal
-        #   api.completed_dispersal(1)
-        #
-        #   # completing orders collection
-        #   api.completed_dispersal(1, :orders)
-        def completed_dispersal(shop_id, routine = :products)
-          request :patch, "shops/#{shop_id}/#{routine}_synced"
         end
       end
     end

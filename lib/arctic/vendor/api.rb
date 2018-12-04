@@ -6,6 +6,9 @@ require 'faraday_middleware'
 module Arctic
   module Vendor
     class API
+      Error = Class.new StandardError
+      InvalidResponse = Class.new Error
+
       attr_reader :connection
 
       def initialize(**options)
@@ -32,9 +35,16 @@ module Arctic
 
         @connection = Faraday.new options do |conn|
           conn.basic_auth(vendor_id, vendor_token)
+          conn.response :detailed_logger, Arctic.logger
           conn.response :json
           conn.adapter :typhoeus
         end
+      end
+
+      def create_product(shop_id, product)
+        response = request :post, "shops/#{shop_id}/products", body: product
+        raise InvalidResponse, response.status unless response.success?
+        response
       end
 
       def list_shops(type = :dispersal, &block)
@@ -47,6 +57,29 @@ module Arctic
         end
 
         all_shops
+      end
+
+      # Calls the Core API and queries when this vendor last ran the given
+      # sync routine
+      def last_synced_at(shop_id, routine)
+        response = request :get, "shops/#{shop_id}/#{routine}/last_synced_at"
+        response.body['last_synced_at']
+      end
+
+      # Notifies the Core API that the vendor has completed its dispersal
+      # process for a specific type.
+      #
+      # Examples:
+      #
+      #   api = Arctic::Vendor::Dispersal::API.new
+      #
+      #   # completing products dispersal
+      #   api.completed_dispersal(1)
+      #
+      #   # completing orders collection
+      #   api.completed_dispersal(1, :orders)
+      def completed_dispersal(shop_id, routine)
+        request :patch, "shops/#{shop_id}/#{routine}_synced"
       end
 
       private

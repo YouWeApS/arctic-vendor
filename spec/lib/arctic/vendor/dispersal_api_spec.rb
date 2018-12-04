@@ -34,7 +34,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
     let(:response1) do
       {
-        status: 200,
+        status: 201,
         body: products1,
 
         # We only _need_ headers in first response. API will supply them in
@@ -50,7 +50,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
     let(:response2) do
       {
-        status: 200,
+        status: 201,
         body: products2,
       }
     end
@@ -59,7 +59,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
     let(:response3) do
       {
-        status: 200,
+        status: 201,
         body: products3,
       }
     end
@@ -129,6 +129,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
       stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders")
         .with(**request_options)
+        .to_return(status: 201)
 
       instance.collect_order(shop_id, {
         id: 'AZ1',
@@ -151,6 +152,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
       stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders/2/invoices")
         .with(**request_options)
+        .to_return(status: 201)
 
       instance.collect_invoice(1, 2, data)
     end
@@ -170,6 +172,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
       stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders/2/order_lines")
         .with(**request_options)
+        .to_return(status: 201)
 
       instance.collect_order_line(1, 2, data)
     end
@@ -207,7 +210,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products_synced")
         .with(**request_options)
 
-      instance.completed_dispersal(shop_id)
+      instance.completed_dispersal(shop_id, :products)
     end
 
     context 'for orders' do

@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.1.0
+
+* Refactor API to more unified method naming across dispersal and collection
+
 ### 2.0.1
 
 * Change order creation endpoint to POST
