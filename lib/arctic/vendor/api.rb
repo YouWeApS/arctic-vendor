@@ -78,7 +78,7 @@ module Arctic
       #
       #   # completing orders collection
       #   api.completed_dispersal(1, :orders)
-      def completed_dispersal(shop_id, routine)
+      def synced(shop_id, routine)
         request :patch, "shops/#{shop_id}/#{routine}_synced"
       end
 
