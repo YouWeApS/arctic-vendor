@@ -3,6 +3,9 @@
 ### 2.1.0
 
 * Refactor API to more unified method naming across dispersal and collection
+* Rename completed_dispersal -> synced
+* Add update_order
+* Add orders
 
 ### 2.0.1
 

@@ -205,12 +205,12 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
     end
   end
 
-  describe '#completed_dispersal' do
+  describe '#synced' do
     it 'calls the right endpoint' do
       stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products_synced")
         .with(**request_options)
 
-      instance.completed_dispersal(shop_id, :products)
+      instance.synced(shop_id, :products)
     end
 
     context 'for orders' do
@@ -218,7 +218,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
         stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/orders_synced")
           .with(**request_options)
 
-        instance.completed_dispersal(shop_id, :orders)
+        instance.synced(shop_id, :orders)
       end
     end
   end

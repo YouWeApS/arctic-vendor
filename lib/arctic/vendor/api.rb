@@ -59,6 +59,21 @@ module Arctic
         all_shops
       end
 
+      def update_order(shop_id, order_data)
+        id = order_data.as_json.fetch 'id'
+        request :patch, "shop/#{shop_id}/orders/#{id}", body: order_data
+      end
+
+      def orders(shop_id, since: nil)
+        all_orders = []
+
+        paginated_request(:get, "shops/#{shop_id}/orders") do |response|
+          all_orders.concat response.body || []
+        end
+
+        all_orders
+      end
+
       # Calls the Core API and queries when this vendor last ran the given
       # sync routine
       def last_synced_at(shop_id, routine)
@@ -74,10 +89,10 @@ module Arctic
       #   api = Arctic::Vendor::Dispersal::API.new
       #
       #   # completing products dispersal
-      #   api.completed_dispersal(1)
+      #   api.synced(1)
       #
       #   # completing orders collection
-      #   api.completed_dispersal(1, :orders)
+      #   api.synced(1, :orders)
       def synced(shop_id, routine)
         request :patch, "shops/#{shop_id}/#{routine}_synced"
       end

@@ -31,6 +31,56 @@ RSpec.describe Arctic::Vendor::API do
     end
   end
 
+  describe '#update_order' do
+    it 'calls the right endpoint' do
+      stub_request(:patch, "http://localhost:5000/v1/vendors/shop/1/orders/2")
+        .with(
+            body: "{\"id\":2,\"a\":\"b\"}",
+            headers: {
+            'Accept'=>'application/json',
+            'Authorization'=>'Basic aWQ6dG9rZW4=',
+            'Content-Type'=>'application/json',
+            'Expect'=>'',
+            'User-Agent'=>'Arctic-Vendor v1.0'
+          })
+        .to_return(status: 200, body: "", headers: {})
+      instance.update_order 1, { id: 2, a: :b }
+    end
+  end
+
+  describe '#create_product' do
+    it 'calls the right endpoint' do
+       stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/products").
+         with(
+           body: "{\"id\":2,\"a\":\"b\"}",
+           headers: {
+          'Accept'=>'application/json',
+          'Authorization'=>'Basic aWQ6dG9rZW4=',
+          'Content-Type'=>'application/json',
+          'Expect'=>'',
+          'User-Agent'=>'Arctic-Vendor v1.0'
+           }).
+         to_return(status: 200, body: "", headers: {})
+      instance.create_product 1, { id: 2, a: :b }
+    end
+  end
+
+  describe '#orders' do
+    it 'calls the right endpoint' do
+       stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders")
+        .with(
+          headers: {
+          'Accept'=>'application/json',
+          'Authorization'=>'Basic aWQ6dG9rZW4=',
+          'Content-Type'=>'application/json',
+          'Expect'=>'',
+          'User-Agent'=>'Arctic-Vendor v1.0'
+        })
+        .to_return(status: 200, body: "", headers: {})
+      instance.orders(1)
+    end
+  end
+
   describe '#request' do
     subject do
       instance.send :request, method,

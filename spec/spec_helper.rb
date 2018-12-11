@@ -1,4 +1,8 @@
 require "bundler/setup"
+
+require "simplecov"
+SimpleCov.start
+
 require "arctic/vendor"
 require 'arctic/validation_api'
 require 'webmock/rspec'
