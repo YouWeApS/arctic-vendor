@@ -33,7 +33,7 @@ RSpec.describe Arctic::Vendor::API do
 
   describe '#update_order' do
     it 'calls the right endpoint' do
-      stub_request(:patch, "http://localhost:5000/v1/vendors/shop/1/orders/2")
+      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/orders/2")
         .with(
             body: "{\"id\":2,\"a\":\"b\"}",
             headers: {
