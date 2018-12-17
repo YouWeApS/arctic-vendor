@@ -64,6 +64,14 @@ module Arctic
         request :patch, "shops/#{shop_id}/orders/#{id}", body: order_data
       end
 
+      def create_order(shop_id, order_data)
+        request :post, "shops/#{shop_id}/orders", body: order_data.as_json
+      end
+
+      def lookup_order(shop_id, order_id)
+        request :get, "shops/#{shop_id}/orders/#{order_id}"
+      end
+
       def orders(shop_id, since: nil)
         all_orders = []
 

@@ -48,6 +48,40 @@ RSpec.describe Arctic::Vendor::API do
     end
   end
 
+  describe '#lookup_order' do
+    it 'calls the right endpoint' do
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders/2").
+        with(
+          headers: {
+         'Accept'=>'application/json',
+         'Authorization'=>'Basic aWQ6dG9rZW4=',
+         'Content-Type'=>'application/json',
+         'Expect'=>'',
+         'User-Agent'=>'Arctic-Vendor v1.0'
+          }).
+        to_return(status: 200, body: "", headers: {})
+      instance.lookup_order 1, 2
+    end
+  end
+
+  describe '#create_order' do
+    it 'calls the right endpoint' do
+      stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders").
+        with(
+          body: "{\"id\":1,\"address\":\"somewhere 5\"}",
+          headers: {
+         'Accept'=>'application/json',
+         'Authorization'=>'Basic aWQ6dG9rZW4=',
+         'Content-Type'=>'application/json',
+         'Expect'=>'',
+         'User-Agent'=>'Arctic-Vendor v1.0'
+          }).
+        to_return(status: 200, body: "", headers: {})
+
+      instance.create_order 1, { id: 1, address: 'somewhere 5' }
+    end
+  end
+
   describe '#create_product' do
     it 'calls the right endpoint' do
        stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/products").
