@@ -52,14 +52,15 @@ module Arctic
 
       begin
         klass = Arctic.validator_class.to_s.classify.constantize
-        validator = klass.new params[:product], **params[:options]
+        logger.debug "Validating with: #{klass}"
+        validator = klass.new params[:product], params[:options]
         status validator.valid? ? 200 : 400
         logger.info "Validated Product(#{sku}): #{validator.errors.empty?}"
         logger.info "Validation errors for Product(#{sku}): #{validator.errors}" if validator.errors.any?
         validator.errors
       rescue => e
         logger.debug "Rescueing from #{e.class}: #{e.message}"
-        logger.debug e.backtrace
+        e.backtrace.collect { |l| logger.debug l }
         logger.error "Validating Product(#{sku}) raised an exception (#{e.class}): #{e.message}"
         status 400
         {

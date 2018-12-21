@@ -6,6 +6,7 @@
 * Rename completed_dispersal -> synced
 * Add update_order
 * Add orders
+* Enforce validator class method signature
 
 ### 2.0.1
 

@@ -4,14 +4,15 @@ require 'rack/test'
 class TestValidator
   attr_reader :product, :options, :errors
 
-  def initialize(product, **options)
-    @options = options
-    @product = product
+  def initialize(product, options)
+    @options = options.as_json
+    @product = product.as_json
     @errors = {}
   end
 
   def valid?
-    add_error :name, 'missing' if product[:name].to_s.blank?
+    add_error :name, 'missing' if product['name'].to_s.blank?
+    add_error :shop, 'missing' unless options['shop'].is_a? Hash
     errors.empty?
   end
 
@@ -20,6 +21,12 @@ class TestValidator
     def add_error(field, error)
       @errors[field] = error
     end
+end
+
+class InvalidTestValidator < TestValidator
+  def initialize(product, **options)
+    super product, **options
+  end
 end
 
 Arctic.validator_class = TestValidator
@@ -43,14 +50,42 @@ RSpec.describe Arctic::ValidationApi do
       }
     end
 
+    let(:shop) do
+      {
+        config: {
+          a: :b,
+        },
+      }
+    end
+
     let(:params) do
       {
         product: product,
+        options: {
+          shop: shop,
+        },
       }
     end
 
     let(:action) do
       post '/validate', params.to_json
+    end
+
+    context 'invalid validator class' do
+      include_context :authenticated
+
+      before { Arctic.validator_class = InvalidTestValidator }
+      after { Arctic.validator_class = TestValidator }
+
+      it 'returns 400' do
+        action
+        expect(last_response.status).to eq(400)
+      end
+
+      it 'returns the correct error' do
+        action
+        expect(last_response.body).to eql({ invalid_request: 'Malformatted request' }.to_json)
+      end
     end
 
     context 'no credentials' do
@@ -93,6 +128,20 @@ RSpec.describe Arctic::ValidationApi do
         it 'returns the correct error' do
           action
           expect(last_response.body).to eql({ name: :missing }.to_json)
+        end
+      end
+
+      context 'invalid options' do
+        let(:shop) { 'hello' }
+
+        it 'returns 400' do
+          action
+          expect(last_response.status).to eq(400)
+        end
+
+        it 'returns the correct error' do
+          action
+          expect(last_response.body).to eql({ shop: :missing }.to_json)
         end
       end
     end
