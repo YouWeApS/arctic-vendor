@@ -34,6 +34,13 @@ module Arctic
           }
         end
 
+        # Change last_synced_at for vendor_shop_configurations table
+        # Will set current time
+
+        def update_shop_products(shop_id)
+          request :patch, "shops/#{shop_id}/products_synced"
+        end
+
         # Report an error with a specific product.
         # This can be used to report feedback fom the marketplace after
         # attempting distribution.
