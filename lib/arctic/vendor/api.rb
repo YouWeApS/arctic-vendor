@@ -59,6 +59,10 @@ module Arctic
         all_shops
       end
 
+      def get_shop(id)
+        request(:get, "shops/#{id}").body
+      end
+
       def update_order(shop_id, order_data)
         id = order_data.as_json.fetch 'id'
         request :patch, "shops/#{shop_id}/orders/#{id}", body: order_data

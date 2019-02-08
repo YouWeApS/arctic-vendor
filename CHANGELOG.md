@@ -7,6 +7,7 @@
 * Add update_order
 * Add orders
 * Enforce validator class method signature
+* Allow looking up a single shop
 
 ### 2.0.1
 

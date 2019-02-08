@@ -186,6 +186,28 @@ RSpec.describe Arctic::Vendor::API do
     end
   end
 
+  describe '#get_shop' do
+    let(:shop1) { { id: 'shop1' }.as_json }
+
+    let(:response) do
+      {
+        status: 200,
+        body: shop1.to_json
+      }
+    end
+
+    before do
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1")
+        .and_return(response)
+    end
+
+    subject { instance.get_shop(1) }
+
+    it 'returns the shop details' do
+      expect(subject).to eql shop1.as_json
+    end
+  end
+
   describe '#paginated_request' do
     let(:params) { { a: :b } }
 
