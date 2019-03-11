@@ -47,6 +47,10 @@ module Arctic
         response
       end
 
+      def sync_products(shop_id)
+        request :get, "shops/#{shop_id}/products/sync_products"
+      end
+
       def list_shops(type = :dispersal, &block)
         all_shops = []
 
