@@ -68,6 +68,10 @@ module Arctic
         request :patch, "shops/#{shop_id}/orders/#{id}", body: order_data
       end
 
+      def update_order_line(shop_id, order_id, order_line_id, data)
+        request :patch, "shops/#{shop_id}/orders/#{order_id}/order_lines/#{order_line_id}", body: data
+      end
+
       def create_order(shop_id, order_data)
         request :post, "shops/#{shop_id}/orders", body: order_data.as_json
       end

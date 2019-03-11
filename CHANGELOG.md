@@ -8,6 +8,7 @@
 * Add orders
 * Enforce validator class method signature
 * Allow looking up a single shop
+* Allow updating single order line
 
 ### 2.0.1
 

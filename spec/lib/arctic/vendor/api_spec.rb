@@ -48,6 +48,23 @@ RSpec.describe Arctic::Vendor::API do
     end
   end
 
+  describe '#update_order_line' do
+    it 'calls the right endpoint' do
+      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/orders/2/order_lines/3")
+        .with(
+            body: { status: 'Invoiced' }.to_json,
+            headers: {
+            'Accept'=>'application/json',
+            'Authorization'=>'Basic aWQ6dG9rZW4=',
+            'Content-Type'=>'application/json',
+            'Expect'=>'',
+            'User-Agent'=>'Arctic-Vendor v1.0'
+          })
+        .to_return(status: 200, body: "", headers: {})
+      instance.update_order_line 1, 2, 3, { status: 'Invoiced' }
+    end
+  end
+
   describe '#lookup_order' do
     it 'calls the right endpoint' do
       stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders/2").
