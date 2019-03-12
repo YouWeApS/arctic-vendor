@@ -47,7 +47,7 @@ module Arctic
         response
       end
 
-      def ready_for_sync_products(shop_id)
+      def ready_for_update_products(shop_id)
         response = request :get, "shops/#{shop_id}/products/sync_products"
         response.body['products']
       end
