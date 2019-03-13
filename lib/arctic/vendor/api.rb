@@ -47,6 +47,11 @@ module Arctic
         response
       end
 
+      def ready_for_update_products(shop_id)
+        response = request :get, "shops/#{shop_id}/products/update_scheduled"
+        response.body['products']
+      end
+
       def list_shops(type = :dispersal, &block)
         all_shops = []
 
