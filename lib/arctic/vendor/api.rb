@@ -82,8 +82,12 @@ module Arctic
 
       def orders(shop_id, since: nil)
         all_orders = []
+        options = {
+          params: {},
+        }
+        options[:params][:since] = since.httpdate if since
 
-        paginated_request(:get, "shops/#{shop_id}/orders") do |response|
+        paginated_request(:get, "shops/#{shop_id}/orders", options) do |response|
           all_orders.concat response.body || []
         end
 
