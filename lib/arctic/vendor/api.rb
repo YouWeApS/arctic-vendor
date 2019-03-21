@@ -47,6 +47,11 @@ module Arctic
         response
       end
 
+      def ready_for_update_products(shop_id)
+        response = request :get, "shops/#{shop_id}/products/update_scheduled"
+        response.body
+      end
+
       def list_shops(type = :dispersal, &block)
         all_shops = []
 
@@ -86,8 +91,13 @@ module Arctic
 
       def orders(shop_id, since: nil)
         all_orders = []
+        options = {
+          params: {
+            since: since,
+          },
+        }
 
-        paginated_request(:get, "shops/#{shop_id}/orders") do |response|
+        paginated_request(:get, "shops/#{shop_id}/orders", options) do |response|
           all_orders.concat response.body || []
         end
 

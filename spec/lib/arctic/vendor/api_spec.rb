@@ -118,7 +118,7 @@ RSpec.describe Arctic::Vendor::API do
 
   describe '#orders' do
     it 'calls the right endpoint' do
-       stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders")
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders?since")
         .with(
           headers: {
           'Accept'=>'application/json',
@@ -129,6 +129,21 @@ RSpec.describe Arctic::Vendor::API do
         })
         .to_return(status: 200, body: "", headers: {})
       instance.orders(1)
+    end
+
+    it 'calls the right endpoint since' do
+      date = 1.minute.ago.httpdate
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/orders?since=#{date}")
+        .with(
+          headers: {
+          'Accept'=>'application/json',
+          'Authorization'=>'Basic aWQ6dG9rZW4=',
+          'Content-Type'=>'application/json',
+          'Expect'=>'',
+          'User-Agent'=>'Arctic-Vendor v1.0'
+        })
+        .to_return(status: 200, body: "", headers: {})
+      instance.orders(1, since: date)
     end
   end
 
