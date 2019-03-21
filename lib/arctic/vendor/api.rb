@@ -49,7 +49,7 @@ module Arctic
 
       def ready_for_update_products(shop_id)
         response = request :get, "shops/#{shop_id}/products/update_scheduled"
-        response.body['products']
+        response.body
       end
 
       def list_shops(type = :dispersal, &block)
