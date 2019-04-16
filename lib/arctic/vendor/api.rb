@@ -68,6 +68,10 @@ module Arctic
         request(:get, "shops/#{id}").body
       end
 
+      def get_shipping_mappings_for_shop(id)
+        request(:get, "shops/#{id}").body.dig('shipping_mappings')
+      end
+
       def update_order(shop_id, order_data)
         id = order_data.as_json.fetch 'id'
         request :patch, "shops/#{shop_id}/orders/#{id}", body: order_data
