@@ -37,6 +37,13 @@ module Arctic
       end
     end
 
+    desc "Run products disperse"
+    post :disperse do
+      Amazon::Workers::Products.perform_async params[:options]['shop']['id'], continue: true
+      status 200
+      { request: 'Sync products' }
+    end
+
     desc "Ping"
     get do
       { ping: :pong }
