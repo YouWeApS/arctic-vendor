@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.1.1
+* Added Webhook API that will handle stock count changes for products and send them to Core.
+
 ### 2.1.0
 
 * Refactor API to more unified method naming across dispersal and collection
