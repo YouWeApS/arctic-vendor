@@ -37,7 +37,7 @@ module Arctic
 
       def product(params)
         if params['oldValues'] != nil
-          params['oldValues']['objectIdentifier']
+          encode(params['oldValues']['objectIdentifier'])
         end
       end
 
