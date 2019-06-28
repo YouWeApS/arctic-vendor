@@ -52,6 +52,13 @@ module Arctic
         return url.include?('dandomain.arctic-project.io'), url[(url.index('shop_id') + 8), 36]
       end
 
+      def encode(text)
+        result = URI.encode(text).sub '/', '%2F'
+        replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"] ]
+        replacements.each {|replacement| result.sub!(replacement[0], replacement[1])}
+        result
+      end
+
       def update_product_count(params)
         core_api = Arctic::Vendor::Dispersal::API.new
         core_api.update_product_stock(@shop_id, product(params), data(params))

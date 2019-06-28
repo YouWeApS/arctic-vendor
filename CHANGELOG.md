@@ -1,6 +1,6 @@
 # Changelog
 
-### 2.2.0
+### 2.2.1
 * Added Webhook API that will handle stock count changes for products and send them to Core.
 
 ### 2.1.0
