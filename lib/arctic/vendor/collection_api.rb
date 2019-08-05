@@ -26,6 +26,17 @@ module Arctic
 
           orders
         end
+
+        def order_error(shop_id, order_id, error)
+          request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
+            shop_id:shop_id,
+            order_id: order_id,
+            error_type: 'export',
+            severity: 'error',
+            message: error.message,
+            details: error.full_message
+          }
+        end
       end
     end
   end

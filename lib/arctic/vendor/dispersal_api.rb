@@ -65,6 +65,18 @@ module Arctic
             raise InvalidResponse, response.body unless response.status == 201
           end
         end
+
+        #Collect errors from wrong Order import/expot
+        def order_error(shop_id, order_id, error)
+          request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
+              shop_id:shop_id,
+              order_id: order_id,
+              error_type: 'import',
+              severity: 'error',
+              message: error.message,
+              details: error.full_message
+          }
+        end
       end
     end
   end
