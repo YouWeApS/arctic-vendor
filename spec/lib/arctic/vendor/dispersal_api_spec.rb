@@ -178,27 +178,6 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
     end
   end
 
-  describe '#order_error' do
-    it 'calls the right endpoint' do
-      request_options[:body] = {
-          message: 'Some error',
-          details: 'Error details',
-          raw_data: {
-              some: :data,
-          },
-      }.to_json
-
-      stub_request(:post, "http://localhost:5000/v1/vendors/shops/1/orders/order+1/errors")
-          .with(**request_options)
-
-      instance.report_error(shop_id, 'order+1', {
-          message: 'Some error',
-          details: 'Error details',
-          raw_data: { some: :data },
-      })
-    end
-  end
-
   describe '#last_synced_at' do
     let(:time) { 1.minute.ago.httpdate }
 
