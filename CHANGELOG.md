@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.2
+* Added order errors API request
+
 ### 2.2.1
 * Added Webhook API that will handle stock count changes for products and send them to Core.
 
