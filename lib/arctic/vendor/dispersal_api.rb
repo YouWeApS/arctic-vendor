@@ -29,7 +29,7 @@ module Arctic
         #    product has changed in some way.
         #  * inprogress: The product is currently being distributed
         def update_product_state(shop_id, sku, state)
-          request :patch, "shops/#{shop_id}/products/#{sku}", body: {
+          request :patch, "shops/#{shop_id}/products/#{encode(sku)}", body: {
             state: state,
           }
         end
@@ -38,7 +38,7 @@ module Arctic
         # This can be used to report feedback fom the marketplace after
         # attempting distribution.
         def report_error(shop_id, sku, error)
-          request :post, "shops/#{shop_id}/products/#{sku}/errors", body: error
+          request :post, "shops/#{shop_id}/products/#{encode(sku)}/errors", body: error
         end
 
         # Dispersal vendors collect orders for the collection vendor. So orders
@@ -64,6 +64,13 @@ module Arctic
           request(:post, "shops/#{shop_id}/orders/#{order_id}/order_lines", body: order_line).tap do |response|
             raise InvalidResponse, response.body unless response.status == 201
           end
+        end
+
+        def encode(text)
+          result = URI.encode(text).sub '/', '%2F'
+          replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"], [".", "%2e"] ]
+          replacements.each {|replacement| result.sub!(replacement[0], replacement[1])}
+          result
         end
 
         #Collect errors from wrong Order import/expot
