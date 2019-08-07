@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.3
+* Added encode for product SKU during API request.
+
 ### 2.2.2
 * Added order errors API request
 
