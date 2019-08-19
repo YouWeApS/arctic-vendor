@@ -54,7 +54,7 @@ module Arctic
 
       def encode(text)
         result = URI.encode(text).sub '/', '%2F'
-        replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"] ]
+        replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"] , [".", "%2E"]]
         replacements.each {|replacement| result.sub!(replacement[0], replacement[1])}
         result
       end
