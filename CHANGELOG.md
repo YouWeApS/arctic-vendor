@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.4
+* Encode changed.
+
 ### 2.2.3
 * Added encode for product SKU during API request.
 
