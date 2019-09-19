@@ -27,6 +27,13 @@ module Arctic
           orders
         end
 
+        def order_dispersed( shop_id, order_id)
+          request :patch, "shops/#{shop_id}/orders/#{order_id}/dispersed", body: {
+            shop_id:shop_id,
+            order_id: order_id
+          }
+        end
+
         def order_error(shop_id, order_id, error)
           request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
             shop_id:shop_id,

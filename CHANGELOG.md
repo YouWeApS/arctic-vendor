@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.5
+* Order dispersed at changed on disperse process.
+
 ### 2.2.4
 * Encode changed.
 
