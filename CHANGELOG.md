@@ -1,5 +1,11 @@
 # Changelog
 
+### 2.2.7
+* Update retry logic for DispersalApi list_products method
+
+### 2.2.6
+* Add retry logic for DispersalApi list_products method
+
 ### 2.2.5
 * Order dispersed at changed on disperse process.
 
