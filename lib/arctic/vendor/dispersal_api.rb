@@ -12,11 +12,19 @@ module Arctic
             params: params,
           }
 
-          products = []
+          # retries logic presented here because of weird, not supposed to happen, Pagy::OutOfRangeError on Core
+          # which results in 400 code response on some requests
+          begin
+            retries ||= 0
 
-          paginated_request(:get, url, options) do |response|
-            yield response.body if block_given?
-            products.concat response.body
+            products = []
+
+            paginated_request(:get, url, options) do |response|
+              yield response.body if block_given?
+              products.concat response.body
+            end
+          rescue TypeError
+            retry if (retries += 1) < 3
           end
 
           products
