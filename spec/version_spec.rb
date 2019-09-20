@@ -1,5 +1,5 @@
 require "spec_helper"
 
 RSpec.describe 'VERSION' do
-  it { expect(Arctic::Vendor::VERSION).to eql '2.2.5' }
+  it { expect(Arctic::Vendor::VERSION).to eql '2.2.6' }
 end
