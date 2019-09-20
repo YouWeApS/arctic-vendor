@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.1.0)
+    arctic-vendor (2.2.5)
       activesupport (~> 5.2)
       faraday (~> 0.14)
       faraday-detailed_logger (~> 2.1)
@@ -15,7 +15,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.2)
+    activesupport (5.2.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -30,7 +30,7 @@ GEM
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.1.3)
+    concurrent-ruby (1.1.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     descendants_tracker (0.0.4)
@@ -38,27 +38,27 @@ GEM
     diff-lcs (1.3)
     docile (1.3.1)
     equalizer (0.0.11)
-    ethon (0.11.0)
+    ethon (0.12.0)
       ffi (>= 1.3.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
-    faraday-detailed_logger (2.1.2)
+    faraday-detailed_logger (2.1.3)
       faraday (~> 0.8)
-    faraday_middleware (0.12.2)
+    faraday_middleware (0.13.1)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.25)
+    ffi (1.11.1)
     formatador (0.2.5)
-    grape (1.2.2)
+    grape (1.2.4)
       activesupport
       builder
       mustermann-grape (~> 1.0.0)
       rack (>= 1.3.0)
       rack-accept
       virtus (>= 1.0.0)
-    grape_logging (1.8.0)
+    grape_logging (1.8.3)
       grape
       rack
-    guard (2.15.0)
+    guard (2.15.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (>= 1.0.12, < 2.0)
@@ -74,7 +74,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     hashdiff (0.3.7)
     hashie (3.6.0)
-    i18n (1.2.0)
+    i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     json (2.1.0)
@@ -86,12 +86,12 @@ GEM
     lumberjack (1.0.13)
     method_source (0.9.2)
     minitest (5.11.3)
-    multipart-post (2.0.0)
+    multipart-post (2.1.1)
     mustermann (1.0.3)
     mustermann-grape (1.0.0)
       mustermann (~> 1.0.0)
     nenv (0.3.0)
-    notiffany (0.1.1)
+    notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
     pry (0.12.2)
@@ -105,8 +105,8 @@ GEM
       rack (>= 1.0, < 3)
     rake (10.5.0)
     rb-fsevent (0.10.3)
-    rb-inotify (0.9.10)
-      ffi (>= 0.5.0, < 2)
+    rb-inotify (0.10.0)
+      ffi (~> 1.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -163,4 +163,4 @@ DEPENDENCIES
   webmock (~> 3.4)
 
 BUNDLED WITH
-   1.16.6
+   1.17.2
