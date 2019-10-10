@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.8
+* add #update_products_dispersals to dispersal API
+
 ### 2.2.7
 * Update retry logic for DispersalApi list_products method
 
