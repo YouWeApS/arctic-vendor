@@ -92,6 +92,13 @@ module Arctic
               details: error.full_message
           }
         end
+
+        def update_products_dispersals(shop_id, product_ids, state)
+          request :patch, "shops/#{shop_id}/products/dispersals", body: {
+            product_ids: product_ids,
+            state: state,
+          }
+        end
       end
     end
   end
