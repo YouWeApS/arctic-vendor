@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.9
+* change #update_products_dispersals param name
+
 ### 2.2.8
 * add #update_products_dispersals to dispersal API
 
