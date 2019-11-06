@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.2.9)
+    arctic-vendor (2.2.10)
       activesupport (~> 5.2)
       faraday (~> 0.14)
       faraday-detailed_logger (~> 2.1)
@@ -58,7 +58,7 @@ GEM
     grape_logging (1.8.3)
       grape
       rack
-    guard (2.15.1)
+    guard (2.16.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (>= 1.0.12, < 2.0)
@@ -84,7 +84,7 @@ GEM
     log_formatter (0.8.2)
     lumberjack (1.0.13)
     method_source (0.9.2)
-    minitest (5.12.2)
+    minitest (5.13.0)
     multipart-post (2.1.1)
     mustermann (1.0.3)
     mustermann-grape (1.0.0)

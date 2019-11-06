@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.10
+* fix escaping slash in object_id
+
 ### 2.2.9
 * change #update_products_dispersals param name
 
