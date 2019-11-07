@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.11
+* fix object_id encoding
+
 ### 2.2.10
 * fix escaping slash in object_id
 
