@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.2.12
+* accept params for #update_products_dispersals
+
 ### 2.2.11
 * fix object_id encoding
 
