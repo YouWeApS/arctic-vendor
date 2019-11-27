@@ -93,11 +93,13 @@ module Arctic
           }
         end
 
-        def update_products_dispersals(shop_id, product_skus, state)
-          request :patch, "shops/#{shop_id}/products/dispersals", body: {
-            product_skus: product_skus,
-            state: state,
-          }
+        def update_products_dispersals(shop_id, product_skus, state, **params)
+          request :patch, "shops/#{shop_id}/products/dispersals",
+            body: {
+              product_skus: product_skus,
+              state: state,
+            },
+            params: params
         end
       end
     end
