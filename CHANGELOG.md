@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.2
+* initialize faraday response object from faraday error object when catching response with < 500 status
+
 ### 2.3.1
 * workaround for faraday gem errors statuses mapping
 

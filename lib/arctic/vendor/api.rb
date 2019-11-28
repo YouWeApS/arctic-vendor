@@ -142,12 +142,15 @@ module Arctic
 
           Arctic.logger.info "#{method.to_s.upcase} #{endpoint}: #{options.to_json}"
 
-          response = connection.public_send method, endpoint do |r|
+          connection.public_send method, endpoint do |r|
             options.fetch(:params, {}).each { |k, v| r.params[k] = v }
             r.body = options[:body].to_json if options[:body]
           end
         rescue Faraday::ClientError, Faraday::ServerError => e
-          return response if e.is_a?(Faraday::ClientError) && e.response[:status] < 500
+          if e.is_a?(Faraday::ClientError) && e.response[:status] < 500
+            return Faraday::Response.new \
+              status: e.response[:status], body: e.response[:body], response_headers: e.response[:headers]
+          end
 
           if (retries += 1) <= FAILED_REQUEST_RETRY_COUNT
             sleep 120 # 2 mins
