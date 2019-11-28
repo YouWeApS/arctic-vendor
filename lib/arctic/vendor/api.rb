@@ -6,6 +6,8 @@ require 'faraday_middleware'
 module Arctic
   module Vendor
     class API
+      FAILED_REQUEST_RETRY_COUNT = 5
+
       Error = Class.new StandardError
       InvalidResponse = Class.new Error
 
@@ -37,6 +39,7 @@ module Arctic
           conn.basic_auth(vendor_id, vendor_token)
           conn.response :detailed_logger, Arctic.logger
           conn.response :json
+          conn.response :raise_error
           conn.adapter :typhoeus
         end
       end
@@ -135,10 +138,20 @@ module Arctic
 
         # Make a single request and return the response object
         def request(method, endpoint, **options)
+          retries ||= 0
+
           Arctic.logger.info "#{method.to_s.upcase} #{endpoint}: #{options.to_json}"
+
           connection.public_send method, endpoint do |r|
             options.fetch(:params, {}).each { |k, v| r.params[k] = v }
             r.body = options[:body].to_json if options[:body]
+          end
+        rescue Faraday::ClientError, Faraday::ServerError => e
+          if (retries += 1) <= FAILED_REQUEST_RETRY_COUNT
+            sleep 120 # 2 mins
+            retry
+          else
+            raise e
           end
         end
 
