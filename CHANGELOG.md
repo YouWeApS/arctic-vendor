@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3
+* retry on failed request
+
 ### 2.2.12
 * accept params for #update_products_dispersals
 
