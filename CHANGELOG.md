@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.1
+* workaround for faraday gem errors statuses mapping
+
 ### 2.3
 * retry on failed request
 
