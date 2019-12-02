@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.3
+* Dispersal::API#update_products_dispersals: accept custom body
+
 ### 2.3.2
 * initialize faraday response object from faraday error object when catching response with < 500 status
 
