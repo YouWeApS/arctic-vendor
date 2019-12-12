@@ -10,7 +10,13 @@ module Arctic
         @is_dd, @shop_id = get_shop
       end
 
+      def webhook_logger
+        @webhook_logger ||= Logger.new 'log/webhook.log'
+      end
+
       def server_answer
+        webhook_logger.info "Shop ID: #{env['rack.request.query_hash']['shop_id']} | Data: #{env['api.request.body']}"
+
         init_params
         unless @is_dd
           [200, {"Content-Type" => "text/html"}, ["Not Done"]]

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.3.2)
+    arctic-vendor (2.3.3)
       activesupport (~> 5.2)
       faraday (~> 0.1)
       faraday-detailed_logger (~> 2.1)
@@ -26,7 +26,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    builder (3.2.3)
+    builder (3.2.4)
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -48,7 +48,7 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     ffi (1.11.3)
     formatador (0.2.5)
-    grape (1.2.4)
+    grape (1.2.5)
       activesupport
       builder
       mustermann-grape (~> 1.0.0)
@@ -78,7 +78,7 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     json (2.1.0)
-    listen (3.2.0)
+    listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     log_formatter (0.8.2)
