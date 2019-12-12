@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.4
+* add webhooks requests params and body logging to separate file (log/webhook.log)
+
 ### 2.3.3
 * Dispersal::API#update_products_dispersals: accept custom body
 
