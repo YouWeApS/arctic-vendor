@@ -80,13 +80,13 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
     context 'no block given' do
       it 'returns all products across all pages' do
-        expect(instance.list_products(shop_id)).to match_array (1..11).to_a
+        expect(instance.list_products(shop_id, 1_000)).to match_array (1..11).to_a
       end
     end
 
     context 'block given' do
       it 'returns yields each of the product sets' do
-        expect { |b| instance.list_products(shop_id, &b) }.to \
+        expect { |b| instance.list_products(shop_id, 1_000, &b) }.to \
           yield_successive_args(products1, products2, products3)
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products?a=b&page=1")
         .with(**request_options)
         .to_return(response2)
-      instance.list_products(shop_id, page: 1, a: :b)
+      instance.list_products(shop_id, 1_000, page: 1, a: :b)
     end
   end
 
