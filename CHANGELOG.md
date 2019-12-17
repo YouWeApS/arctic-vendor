@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.5
+* Dispersal::Api: add max_items to list_products request
+
 ### 2.3.4
 * add webhooks requests params and body logging to separate file (log/webhook.log)
 

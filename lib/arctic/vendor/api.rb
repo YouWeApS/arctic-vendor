@@ -166,14 +166,19 @@ module Arctic
           initial_response = request *args, **options
           yield initial_response
 
-          # Calculate pages
-          total = initial_response.headers['Total'].to_i
-          per_page = initial_response.headers['Per-Page'].to_i
-          pages = begin
-            (total.to_f / per_page.to_f).ceil
-          rescue FloatDomainError
-            0
-          end
+          max_items = options[:max_items]
+          total     = initial_response.headers['Total'].to_i
+          per_page  = initial_response.headers['Per-Page'].to_i
+
+          pages = \
+            if max_items.present? && total > max_items
+              (max_items / per_page).ceil
+            else
+              (total / per_page).ceil
+            end
+
+          # when total/max_items is less than per_page - previous statement can result in 0
+          pages = [pages, 1].max
 
           # Ignoring first page because that was the initial response
           (2..pages).each do |page|

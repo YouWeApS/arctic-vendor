@@ -5,11 +5,12 @@ module Arctic
     module Dispersal
       class API < Arctic::Vendor::API
         # Lists products for dispersal
-        def list_products(shop_id, **params, &block)
+        def list_products(shop_id, max_items, **params, &block)
           url = "shops/#{shop_id}/products"
 
           options = {
             params: params,
+            max_items: max_items,
           }
 
           begin
