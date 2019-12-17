@@ -167,11 +167,16 @@ module Arctic
           yield initial_response
 
           max_items = options[:max_items]
-          total     = initial_response.headers['Total'].to_i
-          per_page  = initial_response.headers['Per-Page'].to_i
+          total = begin
+            raise('Missing "Total" header value') unless initial_response.headers['Total'].present?
 
-          raise('Missing "Total" header value')    if total == 0
-          raise('Missing "Per-Page" header value') if per_page == 0
+            initial_response.headers['Total'].to_i
+          end
+          per_page = begin
+            raise('Missing "Per-Page" header value') unless initial_response.headers['Per-Page'].present?
+
+            initial_response.headers['Per-Page'].to_i
+          end
 
           pages = \
             if max_items.present? && total > max_items
