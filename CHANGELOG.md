@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.6
+* Dispersal::Api: add handling for API#paginated_request Per-Page header missing case
+
 ### 2.3.5
 * Dispersal::Api: add max_items to list_products request
 

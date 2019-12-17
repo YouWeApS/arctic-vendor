@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.3.4)
+    arctic-vendor (2.3.6)
       activesupport (~> 5.2)
       faraday (~> 0.1)
       faraday-detailed_logger (~> 2.1)
@@ -129,7 +129,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    thor (0.20.3)
+    thor (1.0.0)
     thread_safe (0.3.6)
     timecop (0.9.1)
     typhoeus (1.3.1)

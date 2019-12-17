@@ -170,12 +170,16 @@ module Arctic
           total     = initial_response.headers['Total'].to_i
           per_page  = initial_response.headers['Per-Page'].to_i
 
-          pages = \
+          pages = begin
             if max_items.present? && total > max_items
-              (max_items / per_page).ceil
+              (max_items / per_page.to_f).ceil
             else
-              (total / per_page).ceil
+              (total / per_page.to_f).ceil
             end
+          rescue FloatDomainError # in case Per-Page header will be missing, which will result in its value to be 0
+            0
+          end
+
 
           # when total/max_items is less than per_page - previous statement can result in 0
           pages = [pages, 1].max
