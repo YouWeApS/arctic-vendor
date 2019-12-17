@@ -167,22 +167,23 @@ module Arctic
           yield initial_response
 
           max_items = options[:max_items]
-          total     = initial_response.headers['Total'].to_i
-          per_page  = initial_response.headers['Per-Page'].to_i
+          total = begin
+            raise('Missing "Total" header value') unless initial_response.headers['Total'].present?
 
-          pages = begin
+            initial_response.headers['Total'].to_i
+          end
+          per_page = begin
+            raise('Missing "Per-Page" header value') unless initial_response.headers['Per-Page'].present?
+
+            initial_response.headers['Per-Page'].to_i
+          end
+
+          pages = \
             if max_items.present? && total > max_items
               (max_items / per_page.to_f).ceil
             else
               (total / per_page.to_f).ceil
             end
-          rescue FloatDomainError # in case Per-Page header will be missing, which will result in its value to be 0
-            0
-          end
-
-
-          # when total/max_items is less than per_page - previous statement can result in 0
-          pages = [pages, 1].max
 
           # Ignoring first page because that was the initial response
           (2..pages).each do |page|

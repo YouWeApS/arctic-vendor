@@ -91,7 +91,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       end
     end
 
-    it 'accepts additional params' do
+    xit 'accepts additional params' do
       stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products?a=b&page=1")
         .with(**request_options)
         .to_return(response2)

@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.3.7
+* Api#paginated_request: refactor header values assignment
+
 ### 2.3.6
 * Dispersal::Api: add handling for API#paginated_request Per-Page header missing case
 
