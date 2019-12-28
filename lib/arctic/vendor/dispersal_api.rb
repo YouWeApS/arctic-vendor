@@ -21,18 +21,6 @@ module Arctic
           products
         end
 
-        # Mark a product's state
-        #
-        # States:
-        #  * distributed: This will exclude it from redistribution by the vendor until the
-        #    product has changed in some way.
-        #  * inprogress: The product is currently being distributed
-        def update_product_state(shop_id, sku, state)
-          request :patch, "shops/#{shop_id}/products/#{encode(sku)}", body: {
-            state: state,
-          }
-        end
-
         # Report an error with a specific product.
         # This can be used to report feedback fom the marketplace after
         # attempting distribution.
