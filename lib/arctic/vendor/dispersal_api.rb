@@ -11,7 +11,7 @@ module Arctic
           url = "shops/#{shop_id}/products"
 
           products = []
-          while products.count < (max_items.present? ? max_items : PRODUCTS_LIST_MAX) do
+          while products.size < (max_items.present? ? max_items : PRODUCTS_LIST_MAX) do
             response = request(:get, url, params: params.merge(with_state_update: true)).body
             break if response.empty?
             yield response if block_given?
