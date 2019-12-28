@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.4
+* Dispersal::API: collect products with state update
+
 ### 2.3.7
 * Api#paginated_request: refactor header values assignment
 
