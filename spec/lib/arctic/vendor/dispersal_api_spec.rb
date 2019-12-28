@@ -30,64 +30,31 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
   it { is_expected.to be_a Arctic::Vendor::API }
 
   describe '#list_products' do
-    let(:products1) { [1, 2, 3, 4, 5] }
+    let(:products) { [1, 2, 3, 4, 5] }
 
-    let(:response1) do
+    let(:response) do
       {
-        status: 201,
-        body: products1,
-
-        # We only _need_ headers in first response. API will supply them in
-        # every response, however.
-        headers: {
-          'Total' => '11',
-          'Per-Page' => '5',
-        },
-      }
-    end
-
-    let(:products2) { [6, 7, 8, 9, 10] }
-
-    let(:response2) do
-      {
-        status: 201,
-        body: products2,
-      }
-    end
-
-    let(:products3) { [11] }
-
-    let(:response3) do
-      {
-        status: 201,
-        body: products3,
+        status: 200,
+        body: products,
       }
     end
 
     before do
-      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products")
+      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products?with_state_update=true")
         .with(**request_options)
-        .to_return(response1)
-
-      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products?page=2")
-        .with(**request_options)
-        .to_return(response2)
-
-      stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products?page=3")
-        .with(**request_options)
-        .to_return(response3)
+        .to_return(response)
     end
 
     context 'no block given' do
       it 'returns all products across all pages' do
-        expect(instance.list_products(shop_id, 1_000)).to match_array (1..11).to_a
+        expect(instance.list_products(shop_id, 5)).to match_array (1..5).to_a
       end
     end
 
     context 'block given' do
       it 'returns yields each of the product sets' do
-        expect { |b| instance.list_products(shop_id, 1_000, &b) }.to \
-          yield_successive_args(products1, products2, products3)
+        expect { |b| instance.list_products(shop_id, 5, &b) }.to \
+          yield_successive_args(products)
       end
     end
 
@@ -191,17 +158,6 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       stub_request(:get, "http://localhost:5000/v1/vendors/shops/1/products/last_synced_at")
         .to_return(body: { last_synced_at: time }.to_json)
       expect(instance.last_synced_at(1, :products)).to eql time
-    end
-  end
-
-  describe '#update_product_state' do
-    it 'calls the right endpoint' do
-      request_options[:body] = { state: 'inprogress' }.to_json
-
-      stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products/AZ1")
-        .with(**request_options)
-
-      instance.update_product_state(shop_id, 'AZ1', 'inprogress')
     end
   end
 
