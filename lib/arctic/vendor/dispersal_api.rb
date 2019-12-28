@@ -4,43 +4,21 @@ module Arctic
   module Vendor
     module Dispersal
       class API < Arctic::Vendor::API
+        PRODUCTS_LIST_MAX = 25_000
+
         # Lists products for dispersal
         def list_products(shop_id, max_items=nil, **params, &block)
           url = "shops/#{shop_id}/products"
 
-          options = {
-            params: params,
-            max_items: max_items,
-          }
-
-          begin
-            retries ||= 0
-
-            products = []
-            paginated_request(:get, url, options) do |response|
-              yield response.body if block_given?
-              products.concat response.body
-            end
-          rescue TypeError # caused by 400 error from Core, which is causing response.body to be Hash
-                           # 400 is caused by Pagy::OutOfRangeError, which is raised if number of pages changes during
-                           # requests so you could request non existing page
-            retry if (retries += 1) < 3
-            products = []
+          products = []
+          while products.size < (max_items.present? ? max_items : PRODUCTS_LIST_MAX) do
+            response = request(:get, url, params: params.merge(with_state_update: true)).body
+            break if response.empty?
+            yield response if block_given?
+            products.concat response
           end
 
           products
-        end
-
-        # Mark a product's state
-        #
-        # States:
-        #  * distributed: This will exclude it from redistribution by the vendor until the
-        #    product has changed in some way.
-        #  * inprogress: The product is currently being distributed
-        def update_product_state(shop_id, sku, state)
-          request :patch, "shops/#{shop_id}/products/#{encode(sku)}", body: {
-            state: state,
-          }
         end
 
         # Report an error with a specific product.
