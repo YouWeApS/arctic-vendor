@@ -12,10 +12,17 @@ module Arctic
 
           products = []
           while products.size < (max_items.present? ? max_items : PRODUCTS_LIST_MAX) do
-            response = request(:get, url, params: params.merge(with_state_update: true)).body
-            break if response.empty?
-            yield response if block_given?
-            products.concat response
+            collected_products = request(:get, url, params: params.merge(with_state_update: true)).body
+
+            break if collected_products.empty?
+
+            collected_at = Time.current
+
+            collected_products.map! { |collected_product| collected_product.merge! 'collected_at' => collected_at }
+
+            yield collected_products if block_given?
+
+            products.concat collected_products
           end
 
           products

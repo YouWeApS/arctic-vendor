@@ -30,7 +30,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
   it { is_expected.to be_a Arctic::Vendor::API }
 
   describe '#list_products' do
-    let(:products) { [1, 2, 3, 4, 5] }
+    let(:products) { [{ sku: 'abc' }, { sku: 'abc' }, { sku: 'abc' }, { sku: 'abc' },  { sku: 'abc' }] }
 
     let(:response) do
       {
@@ -47,7 +47,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
 
     context 'no block given' do
       it 'returns all products across all pages' do
-        expect(instance.list_products(shop_id, 5)).to match_array (1..5).to_a
+        expect(instance.list_products(shop_id, 5)).to match_array (products).to_a
       end
     end
 
