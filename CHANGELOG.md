@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.4.1
+* Dispersal::Api#list_products: add 'collected_at' time
+
 ### 2.4
 * Dispersal::API: collect products with state update
 
