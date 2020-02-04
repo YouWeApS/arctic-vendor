@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5
+* remove WebhookAPI (move to dandomain project)
+
 ### 2.4.1
 * Dispersal::Api#list_products: add 'collected_at' time
 
