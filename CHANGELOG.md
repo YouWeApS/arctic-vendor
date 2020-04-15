@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.1
+* add #create_product_categories API request
+
 ### 2.5
 * remove WebhookAPI (move to dandomain project)
 
