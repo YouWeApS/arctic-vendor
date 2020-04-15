@@ -32,8 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "hashie", "~> 3.6"
   spec.add_development_dependency "simplecov", '~> 0.16'
   # spec.add_development_dependency 'pry'
-  # spec.add_development_dependency 'pry-remote'
-  # spec.add_development_dependency 'pry-nav'
+  # spec.add_development_dependency 'pry-byebug'
 
   spec.add_runtime_dependency "guard-rspec"
   spec.add_runtime_dependency "faraday", "~> 0.1"
@@ -45,6 +44,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "grape_logging", "~> 1.8"
   spec.add_runtime_dependency "log_formatter", "~> 0.8"
   # spec.add_runtime_dependency 'pry'
-  # spec.add_runtime_dependency 'pry-remote'
-  # spec.add_runtime_dependency 'pry-nav'
+  # spec.add_runtime_dependency 'pry-byebug'
 end

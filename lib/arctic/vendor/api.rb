@@ -92,6 +92,10 @@ module Arctic
         request :post, "shops/#{shop_id}/orders", body: order_data.as_json
       end
 
+      def create_product_category shop_id:, category:, vendor_name:
+        request :post, "shops/#{shop_id}/categories/#{vendor_name}", body: category
+      end
+
       def lookup_order(shop_id, order_id)
         request :get, "shops/#{shop_id}/orders/#{order_id}"
       end
