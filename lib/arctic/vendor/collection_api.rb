@@ -44,6 +44,10 @@ module Arctic
             details: error.full_message
           }
         end
+
+        def create_product_category shop_id:, category:
+          request :post, "shops/#{shop_id}/products/collection_vendor_categories", body: category
+        end
       end
     end
   end
