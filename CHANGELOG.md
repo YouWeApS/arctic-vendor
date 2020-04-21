@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.2
+* update #create_product_categories API request
+
 ### 2.5.1
 * add #create_product_categories API request
 
