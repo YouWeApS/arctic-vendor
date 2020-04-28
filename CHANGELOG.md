@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.3
+* update request retry logic
+
 ### 2.5.2
 * update #create_product_categories API request
 
