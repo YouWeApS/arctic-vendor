@@ -147,13 +147,13 @@ module Arctic
             r.body = options[:body].to_json if options[:body]
           end
         rescue Faraday::ClientError, Faraday::ServerError => e
-          if e.is_a?(Faraday::ClientError) && e.response[:status] < 500
+          if e.is_a?(Faraday::ClientError) || (e.is_a?(Faraday::ServerError) && e.response[:status] == 500)
             return Faraday::Response.new \
               status: e.response[:status], body: e.response[:body], response_headers: e.response[:headers]
           end
 
           if (retries += 1) <= FAILED_REQUEST_RETRY_COUNT
-            sleep 120 # 2 mins
+            sleep 60 # 1 min
             retry
           else
             raise e
