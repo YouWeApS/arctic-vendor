@@ -75,6 +75,10 @@ module Arctic
         request(:get, "shops/#{id}").body
       end
 
+      def get_vendor_shop_configuration(shop_id)
+        request(:get, "shops/#{shop_id}/vendor_shop_configuration").body
+      end
+
       def get_shipping_mappings_for_shop(id)
         request(:get, "shops/#{id}").body.dig('shipping_mappings')
       end
