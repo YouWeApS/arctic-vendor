@@ -1,6 +1,9 @@
 # Changelog
 
 ### 2.5.3
+* add GET vendor_shop_configuration API method
+
+### 2.5.3
 * update request retry logic
 
 ### 2.5.2
