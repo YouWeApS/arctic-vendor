@@ -135,7 +135,7 @@ module Arctic
       #   # completing orders collection
       #   api.synced(1, :orders)
       def synced(shop_id:, routine:, time: nil)
-        request :patch, "shops/#{shop_id}/#{routine}_synced", params: { last_synced_at: time }
+        request :patch, "shops/#{shop_id}/#{routine}_synced", body: { last_synced_at: time }
       end
 
       private
