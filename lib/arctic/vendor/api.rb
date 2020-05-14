@@ -130,12 +130,12 @@ module Arctic
       #   api = Arctic::Vendor::Dispersal::API.new
       #
       #   # completing products dispersal
-      #   api.synced(1)
+      #   api.synced(1, :products)
       #
       #   # completing orders collection
       #   api.synced(1, :orders)
-      def synced(shop_id, routine)
-        request :patch, "shops/#{shop_id}/#{routine}_synced"
+      def synced(shop_id:, routine:, time:)
+        request :patch, "shops/#{shop_id}/#{routine}_synced", params: { last_synced_at: time }
       end
 
       private
