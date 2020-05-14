@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.6
+* fix #synced method to send data through body not params
+
 ### 2.5.5
 * add ability to specify custom time for last_synced_at
 
