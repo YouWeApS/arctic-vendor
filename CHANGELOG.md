@@ -1,6 +1,9 @@
 # Changelog
 
-### 2.5.3
+### 2.5.5
+* add ability to specify custom time for last_synced_at
+
+### 2.5.4
 * add GET vendor_shop_configuration API method
 
 ### 2.5.3
