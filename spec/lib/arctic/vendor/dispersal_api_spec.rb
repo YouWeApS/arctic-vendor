@@ -166,7 +166,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
       stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/products_synced")
         .with(**request_options)
 
-      instance.synced(shop_id, :products)
+      instance.synced(shop_id: shop_id, routine: :products)
     end
 
     context 'for orders' do
@@ -174,7 +174,7 @@ RSpec.describe Arctic::Vendor::Dispersal::API do
         stub_request(:patch, "http://localhost:5000/v1/vendors/shops/1/orders_synced")
           .with(**request_options)
 
-        instance.synced(shop_id, :orders)
+        instance.synced(shop_id: shop_id, routine: :orders)
       end
     end
   end
