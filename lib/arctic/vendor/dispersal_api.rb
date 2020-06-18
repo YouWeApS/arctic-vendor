@@ -12,7 +12,11 @@ module Arctic
 
           products = []
           while products.size < (max_items.present? ? max_items : PRODUCTS_LIST_MAX) do
-            collected_products = request(:get, url, params: params.merge(with_state_update: true)).body
+            response = request(:get, url, params: params.merge(with_state_update: true))
+
+            Rollbar.error(response.body) && break unless response.success?
+
+            collected_products = response.body
 
             break if collected_products.empty?
 

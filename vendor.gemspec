@@ -43,6 +43,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "grape", "~> 1.1"
   spec.add_runtime_dependency "grape_logging", "~> 1.8"
   spec.add_runtime_dependency "log_formatter", "~> 0.8"
+  spec.add_runtime_dependency "rollbar"
   # spec.add_runtime_dependency 'pry'
   # spec.add_runtime_dependency 'pry-byebug'
 end
