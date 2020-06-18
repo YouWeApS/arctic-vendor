@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.7
+* handle error reponse from Core in list_products dispersal api request
+
 ### 2.5.6
 * fix #synced method to send data through body not params
 
