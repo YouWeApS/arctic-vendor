@@ -72,7 +72,11 @@ module Arctic
       end
 
       def get_shop(id)
-        request(:get, "shops/#{id}").body
+        shop_response = request(:get, "shops/#{id}")
+
+        return if shop_response.body['error'].present?
+
+        shop_response.body
       end
 
       def get_vendor_shop_configuration(shop_id)
@@ -81,6 +85,10 @@ module Arctic
 
       def get_shipping_mappings_for_shop(id)
         request(:get, "shops/#{id}").body.dig('shipping_mappings')
+      end
+
+      def get_product(shop_id, sku)
+        request(:get, "shops/#{shop_id}/products/#{sku}").body
       end
 
       def update_order(shop_id, order_data)
@@ -153,7 +161,7 @@ module Arctic
         rescue Faraday::ClientError, Faraday::ServerError => e
           if e.is_a?(Faraday::ClientError) || (e.is_a?(Faraday::ServerError) && e.response[:status] == 500)
             return Faraday::Response.new \
-              status: e.response[:status], body: e.response[:body], response_headers: e.response[:headers]
+              status: e.response[:status], body: JSON.parse(e.response[:body]), response_headers: e.response[:headers]
           end
 
           if (retries += 1) <= FAILED_REQUEST_RETRY_COUNT
