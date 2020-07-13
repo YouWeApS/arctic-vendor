@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.5.8
+* add request to get single product
+* change #get_shop request to return nil if shop is not found
+
 ### 2.5.7
 * handle error reponse from Core in list_products dispersal api request
 
