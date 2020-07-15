@@ -160,8 +160,10 @@ module Arctic
           end
         rescue Faraday::ClientError, Faraday::ServerError => e
           if e.is_a?(Faraday::ClientError) || (e.is_a?(Faraday::ServerError) && e.response[:status] == 500)
+            response_body = JSON.parse(e.response[:body]) rescue e.response[:body]
+
             return Faraday::Response.new \
-              status: e.response[:status], body: JSON.parse(e.response[:body]), response_headers: e.response[:headers]
+              status: e.response[:status], body: response_body, response_headers: e.response[:headers]
           end
 
           if (retries += 1) <= FAILED_REQUEST_RETRY_COUNT
