@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.9
+* fix response JSON parsing error
+
 ### 2.5.8
 * add request to get single product
 * change #get_shop request to return nil if shop is not found
