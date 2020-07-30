@@ -55,6 +55,11 @@ module Arctic
         response.body
       end
 
+      def remove_scheduled_update(shop_id, sku)
+        response = request :patch, "shops/#{shop_id}/products/update_scheduled", body: { sku: sku }
+        response.body
+      end
+
       def update_product_stock(shop_id, product, data)
         request :patch, "shops/#{shop_id}/products/#{product}/change_stock", body: data
       end
