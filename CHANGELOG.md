@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.10
+* add #remove_scheduled_update API method
+
 ### 2.5.9
 * fix response JSON parsing error
 
