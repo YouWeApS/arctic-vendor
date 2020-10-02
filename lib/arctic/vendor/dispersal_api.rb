@@ -64,13 +64,6 @@ module Arctic
           end
         end
 
-        def encode(text)
-          result = URI.encode(text).gsub '/', '%2F'
-          replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"], [".", "%2e"] ]
-          replacements.each {|replacement| result.gsub!(replacement[0], replacement[1])}
-          result
-        end
-
         #Collect errors from wrong Order import/expot
         def order_error(shop_id, order_id, error)
           request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {

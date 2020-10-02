@@ -93,7 +93,7 @@ module Arctic
       end
 
       def get_product(shop_id, sku)
-        request(:get, "shops/#{shop_id}/products/#{sku}").body
+        request(:get, "shops/#{shop_id}/products/#{encode(sku)}").body
       end
 
       def update_order(shop_id, order_data)
@@ -149,6 +149,13 @@ module Arctic
       #   api.synced(1, :orders)
       def synced(shop_id:, routine:, time: nil)
         request :patch, "shops/#{shop_id}/#{routine}_synced", body: { last_synced_at: time }
+      end
+
+      def encode(text)
+        result = URI.encode(text).gsub '/', '%2F'
+        replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"], [".", "%2e"] ]
+        replacements.each {|replacement| result.gsub!(replacement[0], replacement[1])}
+        result
       end
 
       private
