@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.11
+* move #encode to top api class
+
 ### 2.5.10
 * add #remove_scheduled_update API method
 
