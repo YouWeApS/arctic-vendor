@@ -32,6 +32,18 @@ module Arctic
           products
         end
 
+        def products_enabled shop_id
+          url = "shops/#{shop_id}/products/enabled"
+
+          products = []
+
+          paginated_request(:get, url) do |response|
+            products.concat response.body
+          end
+
+          products
+        end
+
         # Report an error with a specific product.
         # This can be used to report feedback fom the marketplace after
         # attempting distribution.
