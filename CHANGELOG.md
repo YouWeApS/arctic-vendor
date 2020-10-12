@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.12
+* add handling of products#enabled request
+
 ### 2.5.11
 * move #encode to top api class
 
