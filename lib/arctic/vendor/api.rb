@@ -96,6 +96,10 @@ module Arctic
         request(:get, "shops/#{shop_id}/products/#{encode(sku)}").body
       end
 
+      def delete_product(shop_id, sku)
+        request(:delete, "shops/#{shop_id}/products/#{encode(sku)}")
+      end
+
       def update_order(shop_id, order_data)
         id = order_data.as_json.fetch 'id'
         request :patch, "shops/#{shop_id}/orders/#{id}", body: order_data
