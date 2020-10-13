@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.13
+* add product#delete request
+
 ### 2.5.12
 * add handling of products#enabled request
 
