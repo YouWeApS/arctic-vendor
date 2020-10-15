@@ -67,8 +67,7 @@ module Arctic
       def list_shops(type = :dispersal, &block)
         all_shops = []
 
-        paginated_request(:get, 'shops') do |response|
-          shops = response.body[type.to_s]
+        paginated_request(:get, 'shops', type: type) do |response|
           shops.each { |s| yield s } if block_given?
           all_shops.concat shops
         end
