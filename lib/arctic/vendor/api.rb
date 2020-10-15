@@ -68,7 +68,10 @@ module Arctic
         all_shops = []
 
         paginated_request(:get, 'shops', type: type) do |response|
-          shops.each { |s| yield s } if block_given?
+          shops = response.body
+
+          shops.each { |shop| yield shop } if block_given?
+
           all_shops.concat shops
         end
 
