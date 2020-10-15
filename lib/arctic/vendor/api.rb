@@ -1,5 +1,5 @@
 require 'active_support/all'
-require "faraday"
+require 'faraday'
 require 'typhoeus/adapters/faraday'
 require 'faraday_middleware'
 
@@ -46,7 +46,9 @@ module Arctic
 
       def create_product(shop_id, product)
         response = request :post, "shops/#{shop_id}/products", body: product
+
         raise InvalidResponse, response.status unless response.success?
+
         response
       end
 
@@ -104,6 +106,7 @@ module Arctic
 
       def update_order(shop_id, order_data)
         id = order_data.as_json.fetch 'id'
+
         request :patch, "shops/#{shop_id}/orders/#{id}", body: order_data
       end
 
@@ -121,6 +124,7 @@ module Arctic
 
       def orders(shop_id, since: nil)
         all_orders = []
+
         options = {
           params: {
             since: since,
@@ -159,13 +163,15 @@ module Arctic
 
       def encode(text)
         result = URI.encode(text).gsub '/', '%2F'
+
         replacements = [ [' ', "%20"], ["(", "%28"], [")", "%29"], ["|", "%7C"], [".", "%2e"] ]
-        replacements.each {|replacement| result.gsub!(replacement[0], replacement[1])}
+
+        replacements.each { |replacement| result.gsub!(replacement[0], replacement[1]) }
+
         result
       end
 
       private
-
         # Make a single request and return the response object
         def request(method, endpoint, **options)
           retries ||= 0

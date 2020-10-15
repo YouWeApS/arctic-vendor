@@ -4,5 +4,4 @@ require_relative 'logger'
 require_relative 'validation_api'
 require 'faraday/detailed_logger'
 
-module Arctic
-end
+module Arctic; end

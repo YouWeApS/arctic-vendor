@@ -37,19 +37,19 @@ module Arctic
       end
     end
 
-    desc "Run products disperse"
+    desc 'Run products disperse'
     post :disperse do
       Amazon::Workers::Products.perform_async params[:options]['shop']['id'], continue: true
       status 200
       { request: 'Sync products' }
     end
 
-    desc "Ping"
+    desc 'Ping'
     get do
       { ping: :pong }
     end
 
-    desc "Validate a single product"
+    desc 'Validate a single product'
     params do
       requires :product, type: Hash, desc: "Product information"
       optional :options, type: Hash, desc: "Additional options", default: {}

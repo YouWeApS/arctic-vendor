@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.16
+* fix formatting
+
 ### 2.5.15
 * fix shops list request
 

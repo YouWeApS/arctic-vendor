@@ -1,6 +1,6 @@
 require 'log_formatter'
 require 'log_formatter/ruby_json_formatter'
-require "logger"
+require 'logger'
 
 module Arctic
   def logger
