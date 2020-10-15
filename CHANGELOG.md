@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.15
+* fix shops list request
+
 ### 2.5.14
 * #list_shops: send vendor type as param
 

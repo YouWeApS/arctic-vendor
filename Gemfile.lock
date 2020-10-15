@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.5.13)
+    arctic-vendor (2.5.15)
       activesupport (~> 5.2)
       faraday
       faraday-detailed_logger
@@ -120,7 +120,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rollbar (3.0.0)
+    rollbar (3.0.1)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
