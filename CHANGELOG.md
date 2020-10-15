@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.14
+* #list_shops: send vendor type as param
+
 ### 2.5.13
 * add product#delete request
 
