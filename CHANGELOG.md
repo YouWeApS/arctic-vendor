@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.17
+* remove duplicated request logging
+
 ### 2.5.16
 * fix formatting
 
