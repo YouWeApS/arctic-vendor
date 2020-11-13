@@ -176,8 +176,6 @@ module Arctic
         def request(method, endpoint, **options)
           retries ||= 0
 
-          Arctic.logger.info "#{method.to_s.upcase} #{endpoint}: #{options.to_json}"
-
           connection.public_send method, endpoint do |r|
             options.fetch(:params, {}).each { |k, v| r.params[k] = v }
             r.body = options[:body].to_json if options[:body]
