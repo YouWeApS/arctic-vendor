@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.18
+* paginate #ready_for_update_products
+
 ### 2.5.17
 * remove duplicated request logging
 
