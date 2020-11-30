@@ -53,8 +53,9 @@ module Arctic
       end
 
       def ready_for_update_products(shop_id)
-        response = request :get, "shops/#{shop_id}/products/update_scheduled"
-        response.body
+        paginated_request(:get, "shops/#{shop_id}/products/update_scheduled") do |response|
+          response.body.each { |product| yield product }
+        end
       end
 
       def remove_scheduled_update(shop_id, sku)
