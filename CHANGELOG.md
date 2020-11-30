@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.19
+* do not generate docs on circleci
+
 ### 2.5.18
 * paginate #ready_for_update_products
 
