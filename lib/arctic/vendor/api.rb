@@ -52,6 +52,14 @@ module Arctic
         response
       end
 
+      def create_financial_event(shop_id, event)
+        response = request :post, "shops/#{shop_id}/financial_events", body: event
+
+        raise InvalidResponse, response.status unless response.success?
+
+        response
+      end
+
       def ready_for_update_products(shop_id)
         paginated_request(:get, "shops/#{shop_id}/products/update_scheduled") do |response|
           response.body.each { |product| yield product }
