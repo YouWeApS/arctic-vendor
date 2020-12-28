@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.20
+* add ability to create financial events on Core
+
 ### 2.5.19
 * do not generate docs on circleci
 
