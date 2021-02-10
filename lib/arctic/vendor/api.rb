@@ -137,7 +137,11 @@ module Arctic
         options = { params: params }
 
         paginated_request(:get, "shops/#{shop_id}/orders", options) do |response|
-          all_orders.concat response.body || []
+          response_orders = response.body || []
+
+          response_orders.each { |order| yield order } if block_given?
+
+          all_orders.concat response_orders
         end
 
         all_orders
