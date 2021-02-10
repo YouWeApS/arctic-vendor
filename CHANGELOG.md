@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.21
+* allow #orders to accept multiple params and block
+
 ### 2.5.20
 * add ability to create financial events on Core
 
