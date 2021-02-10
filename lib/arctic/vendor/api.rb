@@ -131,14 +131,10 @@ module Arctic
         request :get, "shops/#{shop_id}/orders/#{order_id}"
       end
 
-      def orders(shop_id, since: nil)
+      def orders(shop_id, **params)
         all_orders = []
 
-        options = {
-          params: {
-            since: since,
-          },
-        }
+        options = { params: params }
 
         paginated_request(:get, "shops/#{shop_id}/orders", options) do |response|
           all_orders.concat response.body || []
