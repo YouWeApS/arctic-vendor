@@ -57,7 +57,23 @@ module Arctic
 
         raise InvalidResponse, response.status unless response.success?
 
-        response
+        response.body
+      end
+
+      def get_financial_events(shop_id, params={})
+        response = request :get, "shops/#{shop_id}/financial_events", params: params
+
+        raise InvalidResponse, response.status unless response.success?
+
+        response.body
+      end
+
+      def delete_financial_events(shop_id, params={})
+        response = request :delete, "shops/#{shop_id}/financial_events", params: params
+
+        raise InvalidResponse, response.status unless response.success?
+
+        response.body
       end
 
       def ready_for_update_products(shop_id)

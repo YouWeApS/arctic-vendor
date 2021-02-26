@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.5.21)
+    arctic-vendor (2.5.22)
       activesupport (~> 5.2)
       faraday
       faraday-detailed_logger
@@ -16,7 +16,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.4.4)
+    activesupport (5.2.4.5)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -30,7 +30,7 @@ GEM
       rexml
     diff-lcs (1.4.4)
     docile (1.3.4)
-    dry-configurable (0.12.0)
+    dry-configurable (0.12.1)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.5, >= 0.5.0)
     dry-container (0.7.2)
@@ -42,7 +42,7 @@ GEM
     dry-logic (1.1.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.5, >= 0.5)
-    dry-types (1.5.0)
+    dry-types (1.5.1)
       concurrent-ruby (~> 1.0)
       dry-container (~> 0.3)
       dry-core (~> 0.5, >= 0.5)
@@ -87,7 +87,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     hashdiff (1.0.1)
     hashie (3.6.0)
-    i18n (1.8.8)
+    i18n (1.8.9)
       concurrent-ruby (~> 1.0)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -95,7 +95,7 @@ GEM
     log_formatter (0.8.2)
     lumberjack (1.2.8)
     method_source (1.0.0)
-    minitest (5.14.3)
+    minitest (5.14.4)
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -119,7 +119,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.4)
-    rollbar (3.1.1)
+    rollbar (3.1.2)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -171,4 +171,4 @@ DEPENDENCIES
   webmock (~> 3.4)
 
 BUNDLED WITH
-   2.2.7
+   2.2.11

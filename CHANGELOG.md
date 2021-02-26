@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.22
+* add financial events index and delete collection methods
+
 ### 2.5.21
 * allow #orders to accept multiple params and block
 
