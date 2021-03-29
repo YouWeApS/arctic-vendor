@@ -205,7 +205,7 @@ module Arctic
             options.fetch(:params, {}).each { |k, v| r.params[k] = v }
             r.body = options[:body].to_json if options[:body]
           end
-        rescue Faraday::ClientError, Faraday::ServerError => e
+        rescue Faraday::ClientError, Faraday::ServerError, Faraday::ConnectionFailed => e
           if e.is_a?(Faraday::ClientError) || (e.is_a?(Faraday::ServerError) && e.response[:status] == 500)
             response_body = JSON.parse(e.response[:body]) rescue e.response[:body]
 

@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.23
+* extend request retry logic with Faraday::ConnectionFailed
+
 ### 2.5.22
 * add financial events index and delete collection methods
 
