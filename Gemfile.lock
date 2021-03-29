@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.5.22)
+    arctic-vendor (2.5.23)
       activesupport (~> 5.2)
       faraday
       faraday-detailed_logger
@@ -16,7 +16,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.4.5)
+    activesupport (5.2.5)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -59,9 +59,9 @@ GEM
     faraday-net_http (1.0.1)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
-    ffi (1.14.2)
+    ffi (1.15.0)
     formatador (0.2.5)
-    grape (1.5.2)
+    grape (1.5.3)
       activesupport
       builder
       dry-types (>= 1.1)
@@ -89,7 +89,7 @@ GEM
     hashie (3.6.0)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
-    listen (3.4.1)
+    listen (3.5.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     log_formatter (0.8.2)
