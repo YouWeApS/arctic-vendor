@@ -61,11 +61,21 @@ module Arctic
       end
 
       def get_financial_events(shop_id, params={})
-        response = request :get, "shops/#{shop_id}/financial_events", params: params
+        financial_events = []
 
-        raise InvalidResponse, response.status unless response.success?
+        paginated_request(:get, "shops/#{shop_id}/financial_events", params: params) do |response|
+          raise InvalidResponse, response.status unless response.success?
 
-        response.body
+          response.body.each { |financial_event| yield financial_event } if block_given?
+
+          financial_events.concat response.body
+        end
+
+        financial_events
+      end
+
+      def update_financial_events(shop_id, data)
+        request :patch, "shops/#{shop_id}/financial_events", body: data
       end
 
       def delete_financial_events(shop_id, params={})

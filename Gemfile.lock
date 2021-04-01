@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.5.23)
+    arctic-vendor (2.5.24)
       activesupport (~> 5.2)
       faraday
       faraday-detailed_logger
@@ -87,9 +87,9 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     hashdiff (1.0.1)
     hashie (3.6.0)
-    i18n (1.8.9)
+    i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    listen (3.5.0)
+    listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     log_formatter (0.8.2)

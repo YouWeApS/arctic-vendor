@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.24
+* financaial_events: update #get and add #update collection requests
+
 ### 2.5.23
 * extend request retry logic with Faraday::ConnectionFailed
 
