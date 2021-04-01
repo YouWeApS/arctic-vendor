@@ -1,6 +1,6 @@
 # Changelog
 
-### 2.5.24
+### 2.5.25
 * financaial_events: update #get and add #update collection requests
 
 ### 2.5.23
