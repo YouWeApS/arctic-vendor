@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.26
+* add financial report requests
+
 ### 2.5.25
 * financaial_events: update #get and add #update collection requests
 
