@@ -86,6 +86,26 @@ module Arctic
         response.body
       end
 
+      def get_financial_report(shop_id, report_id)
+        response = request :get, "shops/#{shop_id}/financial_reports/#{report_id}"
+
+        response.success? ? response.body : nil
+      end
+
+      def create_financial_report(shop_id, report_data)
+        response = request :post, "shops/#{shop_id}/financial_reports", body: report_data
+
+        raise InvalidResponse, response.status unless response.success?
+
+        response.body
+      end
+
+      def update_financial_report(shop_id, report_id, data)
+        response = request :patch, "shops/#{shop_id}/financial_reports/#{report_id}", body: data
+
+        raise InvalidResponse, response.status unless response.success?
+      end
+
       def ready_for_update_products(shop_id)
         paginated_request(:get, "shops/#{shop_id}/products/update_scheduled") do |response|
           response.body.each { |product| yield product }
