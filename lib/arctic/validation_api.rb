@@ -51,8 +51,8 @@ module Arctic
 
     desc 'Validate a single product'
     params do
-      requires :product, type: Hash, desc: "Product information"
-      optional :options, type: Hash, desc: "Additional options", default: {}
+      requires :product, type: Hash, desc: 'Product information'
+      optional :options, type: Hash, desc: 'Additional options', default: {}
     end
     post :validate do
       sku = params[:product][:sku]
@@ -71,7 +71,7 @@ module Arctic
         logger.error "Validating Product(#{sku}) raised an exception (#{e.class}): #{e.message}"
         status 400
         {
-          invalid_request: 'Malformatted request'
+          invalid_request: 'Failed to validate product'
         }
       end
     end
