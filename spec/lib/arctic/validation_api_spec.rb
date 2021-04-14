@@ -84,7 +84,7 @@ RSpec.describe Arctic::ValidationApi do
 
       it 'returns the correct error' do
         action
-        expect(last_response.body).to eql({ invalid_request: 'Malformatted request' }.to_json)
+        expect(last_response.body).to eql({ invalid_request: 'Failed to validate product' }.to_json)
       end
     end
 
