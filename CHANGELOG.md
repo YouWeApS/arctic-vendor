@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.27
+* update :invalid_request message
+
 ### 2.5.26
 * add financial report requests
 
