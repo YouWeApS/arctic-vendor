@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.28
+* adjust financial_events collection request to fit differences between collection and dispersal vendors
+
 ### 2.5.27
 * update :invalid_request message
 
