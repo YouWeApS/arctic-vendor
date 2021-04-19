@@ -61,17 +61,27 @@ module Arctic
       end
 
       def get_financial_events(shop_id, params={})
-        financial_events = []
+        if params[:dispersal_vendor].present?
+          response = request(:get, "shops/#{shop_id}/financial_events", params: params)
 
-        paginated_request(:get, "shops/#{shop_id}/financial_events", params: params) do |response|
           raise InvalidResponse, response.status unless response.success?
 
-          response.body.each { |financial_event| yield financial_event } if block_given?
+          financial_events_data = response.body
+        else
+          financial_events = []
 
-          financial_events.concat response.body
+          paginated_request(:get, "shops/#{shop_id}/financial_events", params: params) do |response|
+            raise InvalidResponse, response.status unless response.success?
+
+            response.body.each { |financial_event| yield financial_event } if block_given?
+
+            financial_events.concat(response.body)
+          end
+
+          financial_events_data = financial_events
         end
 
-        financial_events
+        financial_events_data
       end
 
       def update_financial_events(shop_id, data)
