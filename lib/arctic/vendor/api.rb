@@ -203,6 +203,15 @@ module Arctic
         all_orders
       end
 
+      def create_order_error(shop_id, order_id, error_type:, message:, severity: 'error', details: nil)
+        request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
+          error_type: error_type,
+          severity: severity,
+          message: message,
+          details: details
+        }
+      end
+
       # Calls the Core API and queries when this vendor last ran the given
       # sync routine
       def last_synced_at(shop_id, routine)

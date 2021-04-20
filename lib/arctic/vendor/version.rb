@@ -1,5 +1,5 @@
 module Arctic
   module Vendor
-    VERSION = '2.5.28'
+    VERSION = '2.5.29'
   end
 end

@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.29
+* add Arctic::Vendor::API#create_order_error
+
 ### 2.5.28
 * adjust financial_events collection request to fit differences between collection and dispersal vendors
 

@@ -12,14 +12,13 @@ module Arctic
         end
 
         def order_error(shop_id, order_id, error)
-          request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
-            shop_id:shop_id,
-            order_id: order_id,
+          create_order_error(
+            shop_id, order_id,
             error_type: 'export',
             severity: 'error',
             message: error.message,
             details: error.full_message
-          }
+          )
         end
 
         def create_product_category shop_id:, category:
