@@ -78,14 +78,13 @@ module Arctic
 
         #Collect errors from wrong Order import/expot
         def order_error(shop_id, order_id, error)
-          request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
-              shop_id:shop_id,
-              order_id: order_id,
+          create_order_error(
+              shop_id, order_id,
               error_type: 'import',
               severity: 'error',
               message: error.message,
               details: error.full_message
-          }
+          )
         end
 
         def update_products_dispersals(shop_id, **body)
