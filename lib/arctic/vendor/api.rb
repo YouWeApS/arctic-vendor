@@ -203,6 +203,15 @@ module Arctic
         all_orders
       end
 
+      # Creates an order error
+      #
+      # @param [String] shop_id the shop ID
+      # @param [String] order_id the order ID
+      # @param [String] error_type enum: ['import', 'export', 'shipment_confirm']
+      # @param [String] message the error message
+      # @param [String] severity enum: ['error', 'warning']
+      # @param [String] details the error details
+      # @return [Faraday::Response]
       def create_order_error(shop_id, order_id, error_type:, message:, severity: 'error', details: nil)
         request :post, "shops/#{shop_id}/orders/#{order_id}/errors", body: {
           error_type: error_type,
