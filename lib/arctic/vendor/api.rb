@@ -131,10 +131,10 @@ module Arctic
         request :patch, "shops/#{shop_id}/products/#{product}/change_stock", body: data
       end
 
-      def list_shops(type = :dispersal, &block)
+      def list_shops(type = :dispersal, **params, &block)
         all_shops = []
 
-        paginated_request(:get, 'shops', type: type) do |response|
+        paginated_request(:get, 'shops', params: params.merge(type: type)) do |response|
           shops = response.body
 
           shops.each { |shop| yield shop } if block_given?
