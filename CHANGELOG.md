@@ -2,6 +2,7 @@
 
 ### 2.5.30
 * add the ability to get shops by params
+* fix Arctic::Vendor::API#list_shops
 
 ### 2.5.29
 * add Arctic::Vendor::API#create_order_error

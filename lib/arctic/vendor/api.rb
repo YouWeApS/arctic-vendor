@@ -134,7 +134,7 @@ module Arctic
       def list_shops(type = :dispersal, **params, &block)
         all_shops = []
 
-        paginated_request(:get, 'shops', type: type, params: params) do |response|
+        paginated_request(:get, 'shops', params: params.merge(type: type)) do |response|
           shops = response.body
 
           shops.each { |shop| yield shop } if block_given?
