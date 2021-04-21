@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.31
+* add the ability to confirm shipment for a bunch of order lines
+
 ### 2.5.30
 * add the ability to get shops by params
 * fix Arctic::Vendor::API#list_shops
