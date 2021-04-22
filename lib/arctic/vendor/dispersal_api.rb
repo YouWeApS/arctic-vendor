@@ -76,6 +76,17 @@ module Arctic
           end
         end
 
+        # Confirm order line shipments by ids
+        #
+        # @param [String] shop_id the shop ID
+        # @param [Array<String>] order_line_ids the order line ids
+        # @return [Faraday::Response]
+        def confirm_order_line_shipments(shop_id, order_line_ids:)
+          request(:patch, "shops/#{shop_id}/order_lines/confirm_shipments", body: { ids: order_line_ids }).tap do |response|
+            raise InvalidResponse, response.body unless response.status == 204
+          end
+        end
+
         #Collect errors from wrong Order import/expot
         def order_error(shop_id, order_id, error)
           create_order_error(
