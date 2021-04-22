@@ -82,8 +82,8 @@ module Arctic
         # @param [Array<String>] order_line_ids the order line ids
         # @return [Faraday::Response]
         def confirm_order_line_shipments(shop_id, order_line_ids:)
-          request(:post, "shops/#{shop_id}/order_lines/confirm_shipments", body: { ids: order_line_ids }).tap do |response|
-            raise InvalidResponse, response.body unless response.status == 201
+          request(:patch, "shops/#{shop_id}/order_lines/confirm_shipments", body: { ids: order_line_ids }).tap do |response|
+            raise InvalidResponse, response.body unless response.status == 204
           end
         end
 
