@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.32
+* bundle update
+
 ### 2.5.31
 * add the ability to confirm shipment for a bunch of order lines
 
