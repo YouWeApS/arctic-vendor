@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.5.33
+* update product validation request logging
+* update gem info with YouWe info
+
 ### 2.5.32
 * bundle update
 
