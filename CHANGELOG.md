@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.34
+* raise argument errors when required args are not present
+
 ### 2.5.33
 * update product validation request logging
 * update gem info with YouWe info

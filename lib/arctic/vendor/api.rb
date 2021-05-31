@@ -184,6 +184,8 @@ module Arctic
       end
 
       def lookup_order(shop_id, order_id)
+        raise ArgumentError, 'order_id must be present' unless order_id.present?
+
         request :get, "shops/#{shop_id}/orders/#{order_id}"
       end
 

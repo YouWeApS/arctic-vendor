@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arctic-vendor (2.5.33)
+    arctic-vendor (2.5.34)
       activesupport (~> 5.2)
       faraday
       faraday-detailed_logger
@@ -50,7 +50,9 @@ GEM
       dry-logic (~> 1.0, >= 1.0.2)
     ethon (0.14.0)
       ffi (>= 1.15.0)
-    faraday (1.4.1)
+    faraday (1.4.2)
+      faraday-em_http (~> 1.0)
+      faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
       faraday-net_http (~> 1.0)
       faraday-net_http_persistent (~> 1.1)
@@ -58,12 +60,14 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-detailed_logger (2.3.0)
       faraday (>= 0.8, < 2)
+    faraday-em_http (1.0.0)
+    faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
-    ffi (1.15.0)
+    ffi (1.15.1)
     formatador (0.2.5)
     grape (1.5.3)
       activesupport
@@ -75,7 +79,7 @@ GEM
     grape_logging (1.8.4)
       grape
       rack
-    guard (2.16.2)
+    guard (2.17.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (>= 1.0.12, < 2.0)
@@ -119,11 +123,11 @@ GEM
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rake (13.0.3)
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.5)
-    rollbar (3.1.2)
+    rollbar (3.2.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
