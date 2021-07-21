@@ -93,8 +93,8 @@ module Arctic
               shop_id, order_id,
               error_type: 'import',
               severity: 'error',
-              message: error.message,
-              details: error.full_message
+              message: error.message.force_encoding('UTF-8'),
+              details: error.full_message.force_encoding('UTF-8')
           )
         end
 

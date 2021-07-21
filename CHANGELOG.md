@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.5.35
+* force order error messages UTF-8 encoding
+
 ### 2.5.34
 * raise argument errors when required args are not present
 
